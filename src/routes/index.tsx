@@ -105,14 +105,41 @@ function Marketplace() {
     if (n[p.id] <= 0) delete n[p.id];
     return n;
   });
-  const checkout = () => {
-    setConfirmedTotal(cartSubtotal + DELIVERY_FEE + cartSubtotal * PLATFORM_FEE_RATE);
-    setCartOpen(false);
-    setCart({});
-  };
+  const navigate = useNavigate();
+  const placeOrderFn = useServerFn(placeOrder);
+  const [placing, setPlacing] = useState(false);
+  const [checkoutError, setCheckoutError] = useState<string | null>(null);
 
+  const isLicensee = roles.some((r) => r.role === "licensee" && r.status === "approved");
   const isRetailer = roles.some((r) => r.role === "retailer");
   const isAdmin = roles.some((r) => r.role === "admin" && r.status === "approved");
+
+  const checkout = async () => {
+    setCheckoutError(null);
+    if (!user) {
+      navigate({ to: "/login" });
+      return;
+    }
+    if (!isLicensee) {
+      setCheckoutError("Only approved licensees can place orders. Sign up as a licensee to continue.");
+      return;
+    }
+    const items = Object.entries(cart)
+      .filter(([, q]) => q > 0)
+      .map(([product_id, qty]) => ({ product_id, qty }));
+    if (!items.length) return;
+    setPlacing(true);
+    try {
+      await placeOrderFn({ data: { items } });
+      setConfirmedTotal(cartSubtotal + DELIVERY_FEE + cartSubtotal * PLATFORM_FEE_RATE);
+      setCartOpen(false);
+      setCart({});
+    } catch (err) {
+      setCheckoutError(err instanceof Error ? err.message : "Couldn't place order.");
+    } finally {
+      setPlacing(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background text-foreground">
