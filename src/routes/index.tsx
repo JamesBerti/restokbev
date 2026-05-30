@@ -158,6 +158,7 @@ function Marketplace() {
           </div>
 
           <nav className="hidden items-center gap-3 text-xs font-bold md:flex">
+            {user && <Link to="/orders" className="text-muted-foreground hover:text-foreground">My orders</Link>}
             {isRetailer && <Link to="/retailer" className="text-muted-foreground hover:text-foreground">Retailer</Link>}
             {isAdmin && <Link to="/admin" className="text-muted-foreground hover:text-foreground">Admin</Link>}
             {user ? (
