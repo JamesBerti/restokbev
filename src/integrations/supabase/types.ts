@@ -14,16 +14,171 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      products: {
+        Row: {
+          ai_note: string
+          ai_trend: string
+          badge: string | null
+          category: string
+          created_at: string
+          description: string
+          id: string
+          img: string
+          ldb_floor: number
+          name: string
+          price: number
+          rating: number
+          retailer_id: string
+          reviews: number
+          stock: number
+          updated_at: string
+        }
+        Insert: {
+          ai_note?: string
+          ai_trend?: string
+          badge?: string | null
+          category: string
+          created_at?: string
+          description?: string
+          id?: string
+          img?: string
+          ldb_floor: number
+          name: string
+          price: number
+          rating?: number
+          retailer_id: string
+          reviews?: number
+          stock?: number
+          updated_at?: string
+        }
+        Update: {
+          ai_note?: string
+          ai_trend?: string
+          badge?: string | null
+          category?: string
+          created_at?: string
+          description?: string
+          id?: string
+          img?: string
+          ldb_floor?: number
+          name?: string
+          price?: number
+          rating?: number
+          retailer_id?: string
+          reviews?: number
+          stock?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "products_retailer_id_fkey"
+            columns: ["retailer_id"]
+            isOneToOne: false
+            referencedRelation: "retailers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          business_name: string | null
+          created_at: string
+          display_name: string | null
+          id: string
+        }
+        Insert: {
+          business_name?: string | null
+          created_at?: string
+          display_name?: string | null
+          id: string
+        }
+        Update: {
+          business_name?: string | null
+          created_at?: string
+          display_name?: string | null
+          id?: string
+        }
+        Relationships: []
+      }
+      retailers: {
+        Row: {
+          created_at: string
+          delivery_minutes: number
+          id: string
+          name: string
+          neighborhood: string | null
+        }
+        Insert: {
+          created_at?: string
+          delivery_minutes?: number
+          id?: string
+          name: string
+          neighborhood?: string | null
+        }
+        Update: {
+          created_at?: string
+          delivery_minutes?: number
+          id?: string
+          name?: string
+          neighborhood?: string | null
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          retailer_id: string | null
+          role: Database["public"]["Enums"]["app_role"]
+          status: Database["public"]["Enums"]["approval_status"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          retailer_id?: string | null
+          role: Database["public"]["Enums"]["app_role"]
+          status?: Database["public"]["Enums"]["approval_status"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          retailer_id?: string | null
+          role?: Database["public"]["Enums"]["app_role"]
+          status?: Database["public"]["Enums"]["approval_status"]
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_roles_retailer_id_fkey"
+            columns: ["retailer_id"]
+            isOneToOne: false
+            referencedRelation: "retailers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      is_approved_retailer: {
+        Args: { _retailer_id: string; _user_id: string }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "retailer" | "licensee"
+      approval_status: "pending" | "approved" | "rejected"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +305,9 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "retailer", "licensee"],
+      approval_status: ["pending", "approved", "rejected"],
+    },
   },
 } as const
