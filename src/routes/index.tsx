@@ -224,7 +224,7 @@ function Marketplace() {
       </section>
 
       <main className="mx-auto max-w-[1200px] px-5 py-5">
-        <AIInsightsPanel cart={cart} />
+        <AIInsightsPanel cart={cart} products={products} category={activeCat} />
 
         <div className="-mx-1 mb-3.5 flex gap-2 overflow-x-auto px-1 pb-2">
           {CATEGORIES.map((cat) => {
