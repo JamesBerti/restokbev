@@ -121,6 +121,7 @@ function RetailerDashboard() {
         )}
         {approved && retailer && (
           <>
+            <OrdersPanel retailerId={approved.retailer_id!} />
             <div className="mb-5 flex items-end justify-between">
               <div>
                 <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Retailer dashboard</div>
