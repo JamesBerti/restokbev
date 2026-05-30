@@ -281,7 +281,7 @@ function Marketplace() {
         <>
           <div onClick={() => setCartOpen(false)} className="fixed inset-0 z-[999] bg-black/35" />
           <CartDrawer cart={cart} products={products} onAdd={addToCart} onRemove={removeFromCart}
-            onClose={() => setCartOpen(false)} onCheckout={checkout} />
+            onClose={() => setCartOpen(false)} onCheckout={checkout} placing={placing} error={checkoutError} />
         </>
       )}
 
