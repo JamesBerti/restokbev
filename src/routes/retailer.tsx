@@ -52,19 +52,20 @@ function RetailerDashboard() {
     if (!loading && !user) navigate({ to: "/login" });
   }, [loading, user, navigate]);
 
+  const approvedRetailerId = approved?.retailer_id ?? null;
   useEffect(() => {
-    if (!approved?.retailer_id) return;
-    supabase.from("retailers").select("id, name, neighborhood").eq("id", approved.retailer_id).maybeSingle()
+    if (!approvedRetailerId) return;
+    supabase.from("retailers").select("id, name, neighborhood").eq("id", approvedRetailerId).maybeSingle()
       .then(({ data }) => setRetailer(data as RetailerRow | null));
     const load = () =>
-      supabase.from("products").select("*").eq("retailer_id", approved.retailer_id).order("name")
+      supabase.from("products").select("*").eq("retailer_id", approvedRetailerId).order("name")
         .then(({ data }) => setProducts((data ?? []) as DbProduct[]));
     load();
-    const ch = supabase.channel(`retailer-${approved.retailer_id}`)
-      .on("postgres_changes", { event: "*", schema: "public", table: "products", filter: `retailer_id=eq.${approved.retailer_id}` }, load)
+    const ch = supabase.channel(`retailer-${approvedRetailerId}`)
+      .on("postgres_changes", { event: "*", schema: "public", table: "products", filter: `retailer_id=eq.${approvedRetailerId}` }, load)
       .subscribe();
     return () => { supabase.removeChannel(ch); };
-  }, [approved?.retailer_id]);
+  }, [approvedRetailerId]);
 
   const startNew = () => {
     setEditingId("new");
