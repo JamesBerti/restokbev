@@ -12,6 +12,8 @@ type Props = {
   onRemove: (p: Product) => void;
   onClose: () => void;
   onCheckout: () => void;
+  placing?: boolean;
+  error?: string | null;
 };
 
 export function CartDrawer({
@@ -21,6 +23,8 @@ export function CartDrawer({
   onRemove,
   onClose,
   onCheckout,
+  placing,
+  error,
 }: Props) {
   const items = Object.entries(cart).filter(([, q]) => q > 0);
   const subtotal = items.reduce((s, [id, q]) => {
