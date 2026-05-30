@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
-import type { Cart } from "@/lib/restok-data";
+import { useServerFn } from "@tanstack/react-start";
+import { getAiInsights } from "@/lib/insights.functions";
+import type { Cart, Product } from "@/lib/restok-data";
 
 type Insight = {
   icon: string;
@@ -8,43 +10,60 @@ type Insight = {
   trend: "up" | "down" | "flat";
 };
 
-const INSIGHTS: Record<"trends" | "reorder" | "pairing", Insight[]> = {
-  trends: [
-    { icon: "🌹", title: "Rosé season is on", body: "Okanagan rosé orders are up 41% week-over-week as patio season opens. Stock 2-3 SKUs before the long weekend.", trend: "up" },
-    { icon: "🥃", title: "Premium tequila surging", body: "Casamigos and Patron reorders up 35% YoY across Kelowna venues. Move tequila to the front of the back-bar.", trend: "up" },
-    { icon: "💧", title: "Seltzers outpacing cider", body: "Hard seltzer 12-packs now account for 18% of platform volume — up from 11% last May.", trend: "up" },
-  ],
-  reorder: [
-    { icon: "🔄", title: "You usually reorder Pinot Noir", body: "Based on similar Okanagan restaurants, Peak Cellars Pinot Noir is a strong weekly reorder. Last restocked: 9 days ago.", trend: "flat" },
-    { icon: "📈", title: "Trending in your area", body: "Hendrick's Gin is being reordered by 6 nearby venues this week. G&T programs are heating up.", trend: "up" },
-    { icon: "⏳", title: "Low-stock alert", body: "Blue Mountain Brut: only 6 cases left platform-wide, no restock until fall. Lock it in this week.", trend: "up" },
-  ],
-  pairing: [
-    { icon: "🥩", title: "Steak frites + Cab Franc", body: "O'Rourke Cabernet Franc holds up beautifully against grilled red meat. Cross-sell at $14 by-the-glass.", trend: "up" },
-    { icon: "🦪", title: "Oysters + Tantalus Riesling", body: "Electric acidity cuts through brine. Pair on a $32 dozen+glass tasting flight.", trend: "up" },
-    { icon: "🌮", title: "Tacos + Casamigos margaritas", body: "Premium tequila in your house marg pushes ticket size up 22% on average.", trend: "up" },
-  ],
-};
-
 const TABS = [
   { key: "trends", label: "📈 Market Trends" },
   { key: "reorder", label: "🔄 Reorder Tips" },
   { key: "pairing", label: "🍽️ Food Pairing" },
 ] as const;
 
-export function AIInsightsPanel({ cart: _cart }: { cart: Cart }) {
-  const [mode, setMode] = useState<"trends" | "reorder" | "pairing">("trends");
+type Mode = (typeof TABS)[number]["key"];
+
+export function AIInsightsPanel({
+  cart,
+  products,
+  category,
+}: {
+  cart: Cart;
+  products: Product[];
+  category: string;
+}) {
+  const [mode, setMode] = useState<Mode>("trends");
   const [loading, setLoading] = useState(true);
   const [items, setItems] = useState<Insight[]>([]);
+  const [error, setError] = useState<string | null>(null);
+  const fetchInsights = useServerFn(getAiInsights);
 
   useEffect(() => {
+    let cancelled = false;
     setLoading(true);
-    const t = setTimeout(() => {
-      setItems(INSIGHTS[mode]);
-      setLoading(false);
-    }, 350);
-    return () => clearTimeout(t);
-  }, [mode]);
+    setError(null);
+
+    const cartArr = Object.entries(cart)
+      .map(([id, qty]) => {
+        const p = products.find((p) => p.id === id);
+        return p ? { name: p.name, qty } : null;
+      })
+      .filter((x): x is { name: string; qty: number } => !!x);
+
+    fetchInsights({ data: { mode, category, cart: cartArr } })
+      .then((res) => {
+        if (cancelled) return;
+        if (res.error) setError(res.error);
+        setItems(res.insights);
+      })
+      .catch((err) => {
+        if (!cancelled) setError(err instanceof Error ? err.message : "Failed to load insights.");
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+    // products is a large array; key on length + cart contents + filters
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mode, category, JSON.stringify(cart)]);
 
   return (
     <div className="mb-6 rounded-2xl border border-border bg-surface p-5 shadow-soft">
@@ -53,9 +72,7 @@ export function AIInsightsPanel({ cart: _cart }: { cart: Cart }) {
           <div className="bg-brand-gradient rounded-md px-2.5 py-1 text-[11px] font-extrabold tracking-wide text-white">
             ✦ AI Insights
           </div>
-          <span className="text-[13px] text-muted-foreground">
-            Tailored to your venue
-          </span>
+          <span className="text-[13px] text-muted-foreground">Live, powered by Lovable AI</span>
         </div>
         <div className="flex flex-wrap gap-1.5">
           {TABS.map((t) => {
@@ -77,6 +94,12 @@ export function AIInsightsPanel({ cart: _cart }: { cart: Cart }) {
         </div>
       </div>
 
+      {error && !loading && (
+        <div className="mb-3 rounded-md bg-destructive-soft px-3 py-2 text-xs text-destructive">
+          {error}
+        </div>
+      )}
+
       {loading ? (
         <div className="flex gap-3">
           {[0, 1, 2].map((i) => (
@@ -91,26 +114,23 @@ export function AIInsightsPanel({ cart: _cart }: { cart: Cart }) {
         <div className="flex flex-wrap gap-3">
           {items.map((ins, i) => (
             <div
-              key={i}
+              key={`${mode}-${i}`}
               className="animate-fade-up flex-1 basis-[220px] rounded-xl border border-border bg-surface-muted p-3.5"
               style={{ animationDelay: `${i * 0.08}s` }}
             >
               <div className="mb-1.5 flex items-start justify-between gap-2">
                 <div className="flex items-center gap-2">
                   <span className="text-lg">{ins.icon}</span>
-                  <span className="text-xs font-bold text-foreground">
-                    {ins.title}
-                  </span>
+                  <span className="text-xs font-bold text-foreground">{ins.title}</span>
                 </div>
                 {ins.trend === "up" && (
-                  <span className="whitespace-nowrap text-[11px] font-bold text-teal">
-                    ↑ Up
-                  </span>
+                  <span className="whitespace-nowrap text-[11px] font-bold text-teal">↑ Up</span>
+                )}
+                {ins.trend === "down" && (
+                  <span className="whitespace-nowrap text-[11px] font-bold text-destructive">↓ Down</span>
                 )}
               </div>
-              <div className="text-xs leading-relaxed text-muted-foreground">
-                {ins.body}
-              </div>
+              <div className="text-xs leading-relaxed text-muted-foreground">{ins.body}</div>
             </div>
           ))}
         </div>

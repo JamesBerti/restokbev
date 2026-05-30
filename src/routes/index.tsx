@@ -1,11 +1,13 @@
 import { useEffect, useMemo, useState } from "react";
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
 import { AIInsightsPanel } from "@/components/restok/AIInsightsPanel";
 import { CartDrawer } from "@/components/restok/CartDrawer";
 import { OrderConfirmation } from "@/components/restok/OrderConfirmation";
 import { ProductCard } from "@/components/restok/ProductCard";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
+import { placeOrder } from "@/lib/orders.functions";
 import {
   CATEGORIES,
   DELIVERY_FEE,
@@ -103,14 +105,41 @@ function Marketplace() {
     if (n[p.id] <= 0) delete n[p.id];
     return n;
   });
-  const checkout = () => {
-    setConfirmedTotal(cartSubtotal + DELIVERY_FEE + cartSubtotal * PLATFORM_FEE_RATE);
-    setCartOpen(false);
-    setCart({});
-  };
+  const navigate = useNavigate();
+  const placeOrderFn = useServerFn(placeOrder);
+  const [placing, setPlacing] = useState(false);
+  const [checkoutError, setCheckoutError] = useState<string | null>(null);
 
+  const isLicensee = roles.some((r) => r.role === "licensee" && r.status === "approved");
   const isRetailer = roles.some((r) => r.role === "retailer");
   const isAdmin = roles.some((r) => r.role === "admin" && r.status === "approved");
+
+  const checkout = async () => {
+    setCheckoutError(null);
+    if (!user) {
+      navigate({ to: "/login" });
+      return;
+    }
+    if (!isLicensee) {
+      setCheckoutError("Only approved licensees can place orders. Sign up as a licensee to continue.");
+      return;
+    }
+    const items = Object.entries(cart)
+      .filter(([, q]) => q > 0)
+      .map(([product_id, qty]) => ({ product_id, qty }));
+    if (!items.length) return;
+    setPlacing(true);
+    try {
+      await placeOrderFn({ data: { items } });
+      setConfirmedTotal(cartSubtotal + DELIVERY_FEE + cartSubtotal * PLATFORM_FEE_RATE);
+      setCartOpen(false);
+      setCart({});
+    } catch (err) {
+      setCheckoutError(err instanceof Error ? err.message : "Couldn't place order.");
+    } finally {
+      setPlacing(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -129,6 +158,7 @@ function Marketplace() {
           </div>
 
           <nav className="hidden items-center gap-3 text-xs font-bold md:flex">
+            {user && <Link to="/orders" className="text-muted-foreground hover:text-foreground">My orders</Link>}
             {isRetailer && <Link to="/retailer" className="text-muted-foreground hover:text-foreground">Retailer</Link>}
             {isAdmin && <Link to="/admin" className="text-muted-foreground hover:text-foreground">Admin</Link>}
             {user ? (
@@ -194,7 +224,7 @@ function Marketplace() {
       </section>
 
       <main className="mx-auto max-w-[1200px] px-5 py-5">
-        <AIInsightsPanel cart={cart} />
+        <AIInsightsPanel cart={cart} products={products} category={activeCat} />
 
         <div className="-mx-1 mb-3.5 flex gap-2 overflow-x-auto px-1 pb-2">
           {CATEGORIES.map((cat) => {
@@ -251,7 +281,7 @@ function Marketplace() {
         <>
           <div onClick={() => setCartOpen(false)} className="fixed inset-0 z-[999] bg-black/35" />
           <CartDrawer cart={cart} products={products} onAdd={addToCart} onRemove={removeFromCart}
-            onClose={() => setCartOpen(false)} onCheckout={checkout} />
+            onClose={() => setCartOpen(false)} onCheckout={checkout} placing={placing} error={checkoutError} />
         </>
       )}
 

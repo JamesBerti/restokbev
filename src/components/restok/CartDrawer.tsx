@@ -12,6 +12,8 @@ type Props = {
   onRemove: (p: Product) => void;
   onClose: () => void;
   onCheckout: () => void;
+  placing?: boolean;
+  error?: string | null;
 };
 
 export function CartDrawer({
@@ -21,6 +23,8 @@ export function CartDrawer({
   onRemove,
   onClose,
   onCheckout,
+  placing,
+  error,
 }: Props) {
   const items = Object.entries(cart).filter(([, q]) => q > 0);
   const subtotal = items.reduce((s, [id, q]) => {
@@ -116,11 +120,15 @@ export function CartDrawer({
           <div className="mb-4 mt-1 text-[10px] leading-snug text-muted-foreground">
             All prices at or above LDB wholesale floor. LCRB compliant. Platform fee charged to retailer on settlement.
           </div>
+          {error && (
+            <div className="mb-3 rounded-md bg-destructive-soft px-3 py-2 text-xs text-destructive">{error}</div>
+          )}
           <button
             onClick={onCheckout}
-            className="bg-cta-gradient w-full rounded-xl py-3.5 text-[15px] font-extrabold text-white shadow-glow transition active:scale-95"
+            disabled={placing}
+            className="bg-cta-gradient w-full rounded-xl py-3.5 text-[15px] font-extrabold text-white shadow-glow transition active:scale-95 disabled:opacity-60"
           >
-            Place Order · ${total.toFixed(2)}
+            {placing ? "Placing order…" : `Place Order · $${total.toFixed(2)}`}
           </button>
         </div>
       )}
