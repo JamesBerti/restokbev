@@ -1,8 +1,9 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
 import { CATEGORIES } from "@/lib/restok-data";
+import { ORDER_STATUS_FLOW, formatStatus, nextStatus, statusToneClass, type OrderStatus } from "@/lib/order-status";
 
 export const Route = createFileRoute("/retailer")({
   component: RetailerDashboard,
