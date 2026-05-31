@@ -36,6 +36,11 @@ type DbProduct = {
 
 function Marketplace() {
   const { user, roles, signOut } = useAuth();
+  const navigate = useNavigate();
+  const isRetailer = roles.some((r) => r.role === "retailer");
+  useEffect(() => {
+    if (isRetailer) navigate({ to: "/retailer", replace: true });
+  }, [isRetailer, navigate]);
   const [activeCat, setActiveCat] = useState("All");
   const [activeRetailer, setActiveRetailer] = useState("All Retailers");
   const [search, setSearch] = useState("");
