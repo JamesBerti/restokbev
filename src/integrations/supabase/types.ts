@@ -173,18 +173,21 @@ export type Database = {
           created_at: string
           display_name: string | null
           id: string
+          lcrb_licence: string | null
         }
         Insert: {
           business_name?: string | null
           created_at?: string
           display_name?: string | null
           id: string
+          lcrb_licence?: string | null
         }
         Update: {
           business_name?: string | null
           created_at?: string
           display_name?: string | null
           id?: string
+          lcrb_licence?: string | null
         }
         Relationships: []
       }
