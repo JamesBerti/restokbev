@@ -16,6 +16,7 @@ function SignupPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [businessName, setBusinessName] = useState("");
+  const [lcrbLicence, setLcrbLicence] = useState("");
   const [retailers, setRetailers] = useState<Retailer[]>([]);
   const [retailerId, setRetailerId] = useState("");
   const [err, setErr] = useState("");
@@ -32,10 +33,14 @@ function SignupPage() {
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErr(""); setInfo(""); setBusy(true);
+    if (!/^[A-Za-z0-9-]{4,32}$/.test(lcrbLicence.trim())) {
+      setBusy(false);
+      return setErr("Enter a valid LCRB licence number (4–32 letters, digits, or dashes).");
+    }
     const redirectUrl = `${window.location.origin}/`;
     const { data, error } = await supabase.auth.signUp({
       email, password,
-      options: { emailRedirectTo: redirectUrl, data: { business_name: businessName, display_name: businessName } },
+      options: { emailRedirectTo: redirectUrl, data: { business_name: businessName, display_name: businessName, lcrb_licence: lcrbLicence.trim() } },
     });
     if (error) { setBusy(false); return setErr(error.message); }
     // If session exists immediately, insert role
@@ -82,6 +87,18 @@ function SignupPage() {
           <span className="mb-1 block text-xs font-semibold text-foreground">Business name</span>
           <input required value={businessName} onChange={(e) => setBusinessName(e.target.value)}
             className="w-full rounded-lg border-[1.5px] border-border bg-background px-3 py-2 text-sm outline-none focus:border-primary" />
+        </label>
+
+        <label className="mb-3 block">
+          <span className="mb-1 block text-xs font-semibold text-foreground">LCRB licence number</span>
+          <input required value={lcrbLicence} onChange={(e) => setLcrbLicence(e.target.value)}
+            placeholder="e.g. 123456"
+            className="w-full rounded-lg border-[1.5px] border-border bg-background px-3 py-2 text-sm outline-none focus:border-primary" />
+          <span className="mt-1 block text-[11px] text-muted-foreground">
+            {accountType === "licensee"
+              ? "Your Liquor Primary, Food Primary, or Manufacturer licence number."
+              : "Your LRS, RW, or Manufacturer endorsement licence number."}
+          </span>
         </label>
 
         {accountType === "retailer" && (

@@ -19,11 +19,18 @@ function LoginPage() {
     e.preventDefault();
     setErr("");
     setBusy(true);
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
-    setBusy(false);
-    if (error) return setErr(error.message);
+    const { data: signIn, error } = await supabase.auth.signInWithPassword({ email, password });
+    if (error) { setBusy(false); return setErr(error.message); }
+    // Look up role to route the user to the right home surface
+    const uid = signIn.user?.id;
+    let dest: "/" | "/retailer" = "/";
+    if (uid) {
+      const { data: rs } = await supabase.from("user_roles").select("role").eq("user_id", uid);
+      if ((rs ?? []).some((r) => r.role === "retailer")) dest = "/retailer";
+    }
     await refreshRoles();
-    navigate({ to: "/" });
+    setBusy(false);
+    navigate({ to: dest });
   };
 
   return (

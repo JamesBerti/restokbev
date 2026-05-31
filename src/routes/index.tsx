@@ -114,6 +114,11 @@ function Marketplace() {
   const isRetailer = roles.some((r) => r.role === "retailer");
   const isAdmin = roles.some((r) => r.role === "admin" && r.status === "approved");
 
+  // Retailers belong on the merchant dashboard, not the marketplace
+  useEffect(() => {
+    if (isRetailer && !isLicensee && !isAdmin) navigate({ to: "/retailer", replace: true });
+  }, [isRetailer, isLicensee, isAdmin, navigate]);
+
   const checkout = async () => {
     setCheckoutError(null);
     if (!user) {
