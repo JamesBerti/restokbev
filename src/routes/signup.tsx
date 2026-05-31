@@ -89,6 +89,18 @@ function SignupPage() {
             className="w-full rounded-lg border-[1.5px] border-border bg-background px-3 py-2 text-sm outline-none focus:border-primary" />
         </label>
 
+        <label className="mb-3 block">
+          <span className="mb-1 block text-xs font-semibold text-foreground">LCRB licence number</span>
+          <input required value={lcrbLicence} onChange={(e) => setLcrbLicence(e.target.value)}
+            placeholder="e.g. 123456"
+            className="w-full rounded-lg border-[1.5px] border-border bg-background px-3 py-2 text-sm outline-none focus:border-primary" />
+          <span className="mt-1 block text-[11px] text-muted-foreground">
+            {accountType === "licensee"
+              ? "Your Liquor Primary, Food Primary, or Manufacturer licence number."
+              : "Your LRS, RW, or Manufacturer endorsement licence number."}
+          </span>
+        </label>
+
         {accountType === "retailer" && (
           <label className="mb-3 block">
             <span className="mb-1 block text-xs font-semibold text-foreground">Retailer store</span>
