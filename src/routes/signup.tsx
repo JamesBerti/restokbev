@@ -16,6 +16,7 @@ function SignupPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [businessName, setBusinessName] = useState("");
+  const [lcrbLicence, setLcrbLicence] = useState("");
   const [retailers, setRetailers] = useState<Retailer[]>([]);
   const [retailerId, setRetailerId] = useState("");
   const [err, setErr] = useState("");
