@@ -97,7 +97,7 @@ function SignupPage() {
           <span className="mt-1 block text-[11px] text-muted-foreground">
             {accountType === "licensee"
               ? "Your Liquor Primary, Food Primary, or Manufacturer licence number."
-              : "Your LRS, RW, or Manufacturer endorsement licence number."}
+              : "Your Licensee Retail Store licence number."}
           </span>
         </label>
 
