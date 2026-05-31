@@ -33,10 +33,14 @@ function SignupPage() {
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErr(""); setInfo(""); setBusy(true);
+    if (!/^[A-Za-z0-9-]{4,32}$/.test(lcrbLicence.trim())) {
+      setBusy(false);
+      return setErr("Enter a valid LCRB licence number (4–32 letters, digits, or dashes).");
+    }
     const redirectUrl = `${window.location.origin}/`;
     const { data, error } = await supabase.auth.signUp({
       email, password,
-      options: { emailRedirectTo: redirectUrl, data: { business_name: businessName, display_name: businessName } },
+      options: { emailRedirectTo: redirectUrl, data: { business_name: businessName, display_name: businessName, lcrb_licence: lcrbLicence.trim() } },
     });
     if (error) { setBusy(false); return setErr(error.message); }
     // If session exists immediately, insert role
