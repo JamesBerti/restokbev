@@ -188,6 +188,19 @@
   /* Scroll containers without visible scrollbar */
   .no-scrollbar::-webkit-scrollbar { display: none; }
   .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+  /* Compat shims for legacy classes used by retailer/admin/orders routes */
+  .bg-brand-gradient { background: #111318; }
+  .bg-cta-gradient { background: #16a34a; }
+  .text-gradient-brand { color: #16a34a; }
+  .bg-hero-gradient { background: #111318; }
+}
+
+@theme inline {
+  --color-teal: var(--success);
+  --color-teal-foreground: var(--success-foreground);
+  --color-teal-soft: var(--success-soft);
+
 }
 
 @keyframes drift-a {
