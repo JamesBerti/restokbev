@@ -9,9 +9,11 @@ const badgeStyles: Record<BadgeKey, string> = {
 };
 
 export function Badge({ text }: { text: string }) {
-  const cls =
-    badgeStyles[text as BadgeKey] ??
-    "bg-muted text-muted-foreground [&_.dot]:bg-muted-foreground";
+  const isSave = /^Save\s/i.test(text);
+  const cls = isSave
+    ? "bg-success-soft text-green-700 [&_.dot]:bg-success"
+    : (badgeStyles[text as BadgeKey] ??
+      "bg-muted text-muted-foreground [&_.dot]:bg-muted-foreground");
   return (
     <span
       className={`inline-flex items-center gap-1 rounded-full px-2 py-[2px] text-[10px] font-bold tracking-wide ${cls}`}
