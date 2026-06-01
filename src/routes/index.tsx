@@ -152,13 +152,18 @@ function Marketplace() {
       <header className="sticky top-0 z-[100] bg-foreground/95 backdrop-blur supports-[backdrop-filter]:bg-foreground/90">
         <div className="mx-auto flex h-16 max-w-[1200px] items-center gap-3 px-6">
           <Link to="/" className="flex shrink-0 items-center gap-2.5">
-            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-[15px] font-bold text-primary-foreground">
-              <span className="block h-3 w-3 border-b-2 border-l-2 border-white" style={{ borderBottomLeftRadius: 6 }} />
+            <span className="relative flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
+              <span className="flex h-4 w-4 flex-col items-center">
+                <span className="h-[2px] w-4 rounded-sm bg-white" />
+                <span className="h-[10px] w-[2px] bg-white" />
+                <span className="-mt-[1px] h-[2px] w-3 rounded-sm bg-white" />
+              </span>
             </span>
             <span className="text-[18px] font-extrabold tracking-tight text-white">
               <span className="opacity-[0.35]">Re</span>Stok
             </span>
           </Link>
+
 
           <div className="ml-auto flex items-center gap-2">
             <nav className="mr-2 hidden items-center gap-4 text-[12px] font-semibold md:flex">
