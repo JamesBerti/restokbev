@@ -148,159 +148,116 @@ function Marketplace() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      {/* Dark ink nav */}
-      <header className="sticky top-0 z-[100] bg-foreground/95 backdrop-blur supports-[backdrop-filter]:bg-foreground/90">
-        <div className="mx-auto flex h-16 max-w-[1200px] items-center gap-3 px-6">
-          <Link to="/" className="flex shrink-0 items-center gap-2.5">
-            <span className="relative flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
-              <span className="flex h-4 w-4 flex-col items-center">
-                <span className="h-[2px] w-4 rounded-sm bg-white" />
-                <span className="h-[10px] w-[2px] bg-white" />
-                <span className="-mt-[1px] h-[2px] w-3 rounded-sm bg-white" />
-              </span>
-            </span>
-            <span className="text-[18px] font-extrabold tracking-tight text-white">
-              <span className="opacity-[0.35]">Re</span>Stok
-            </span>
-          </Link>
-
-
-          <div className="ml-auto flex items-center gap-2">
-            <nav className="mr-2 hidden items-center gap-4 text-[12px] font-semibold md:flex">
-              {user && <Link to="/orders" className="text-white/70 hover:text-white">My orders</Link>}
-              {isRetailer && <Link to="/retailer" className="text-white/70 hover:text-white">Retailer</Link>}
-              {isAdmin && <Link to="/admin" className="text-white/70 hover:text-white">Admin</Link>}
-              {user ? (
-                <button onClick={signOut} className="text-white/70 hover:text-white">Sign out</button>
-              ) : (
-                <Link to="/login" className="text-white/70 hover:text-white">Sign in</Link>
-              )}
-            </nav>
-
-            <button
-              onClick={() => {
-                const el = document.getElementById("search-input");
-                el?.focus();
-              }}
-              className="flex h-10 w-10 items-center justify-center rounded-full text-white/80 hover:bg-white/10"
-              aria-label="Search"
-            >
-              🔍
-            </button>
-
-            <button
-              onClick={() => setCartOpen(true)}
-              className="relative flex h-10 w-10 items-center justify-center rounded-full text-white/90 hover:bg-white/10"
-              aria-label="Cart"
-            >
-              <span className="text-lg">🛒</span>
-              {cartCount > 0 && (
-                <span className="font-mono absolute -right-0.5 -top-0.5 flex h-5 min-w-[20px] items-center justify-center rounded-full bg-destructive px-1 text-[10px] font-bold text-white">
-                  {cartCount}
-                </span>
-              )}
-            </button>
+      <header className="sticky top-0 z-[100] border-b border-border bg-surface shadow-soft">
+        <div className="mx-auto flex h-16 max-w-[1200px] items-center gap-3.5 px-5">
+          <div className="flex shrink-0 items-center gap-2">
+            <div className="bg-brand-gradient rounded-lg px-3 py-1 text-[15px] font-black tracking-tight text-white">ReStok</div>
+            <span className="hidden text-[11px] font-medium text-muted-foreground sm:inline">Vancouver Wholesale</span>
           </div>
+
+          <div className="flex flex-1 items-center gap-2 rounded-xl border-[1.5px] border-border bg-background px-3.5 py-2 focus-within:border-primary">
+            <span className="text-base text-muted-foreground">🔍</span>
+            <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search products, categories..."
+              className="w-full border-none bg-transparent text-[13px] outline-none placeholder:text-muted-foreground" />
+            {search && <button onClick={() => setSearch("")} className="text-sm text-muted-foreground">✕</button>}
+          </div>
+
+          <nav className="hidden items-center gap-3 text-xs font-bold md:flex">
+            {user && <Link to="/orders" className="text-muted-foreground hover:text-foreground">My orders</Link>}
+            {isRetailer && <Link to="/retailer" className="text-muted-foreground hover:text-foreground">Retailer</Link>}
+            {isAdmin && <Link to="/admin" className="text-muted-foreground hover:text-foreground">Admin</Link>}
+            {user ? (
+              <button onClick={signOut} className="text-muted-foreground hover:text-foreground">Sign out</button>
+            ) : (
+              <Link to="/login" className="text-muted-foreground hover:text-foreground">Sign in</Link>
+            )}
+          </nav>
+
+          <button onClick={() => setCartOpen(true)}
+            className={`flex shrink-0 items-center gap-1.5 rounded-xl border-[1.5px] px-4 py-2 text-[13px] font-bold transition ${cartCount > 0 ? "border-primary bg-primary text-primary-foreground shadow-glow" : "border-border bg-surface text-foreground hover:border-primary"}`}>
+            🛒
+            {cartCount > 0 ? (
+              <span>{cartCount} item{cartCount > 1 ? "s" : ""} · <strong>${cartSubtotal.toFixed(2)}</strong></span>
+            ) : <span>Cart</span>}
+          </button>
         </div>
       </header>
 
-      {/* Search bar — light surface under nav */}
-      <div className="border-b border-border bg-surface">
-        <div className="mx-auto flex max-w-[1200px] items-center gap-3 px-6 py-3">
-          <div className="flex flex-1 items-center gap-2 rounded-xl border border-border bg-surface-muted px-4 py-2.5 focus-within:border-foreground">
-            <span className="text-sm text-muted-foreground">🔍</span>
-            <input
-              id="search-input"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search products, producers, regions…"
-              className="w-full border-none bg-transparent text-[13px] text-foreground outline-none placeholder:text-muted-foreground"
-            />
-            {search && (
-              <button onClick={() => setSearch("")} className="text-sm text-muted-foreground hover:text-foreground">
-                ✕
-              </button>
-            )}
-          </div>
-        </div>
-      </div>
-
-      {/* Hero — clean light */}
-      <section className="bg-surface">
-        <div className="mx-auto max-w-[1200px] px-6 pt-10 pb-8">
-          <div className="font-mono mb-4 inline-flex items-center gap-2 rounded-full border border-[color:var(--color-success-border)] bg-success-soft px-3 py-1.5">
-            <span className="h-1.5 w-1.5 animate-glow-pulse rounded-full bg-primary" />
-            <span className="text-[10px] font-medium uppercase tracking-wider text-success">Same-day delivery · Order by 2pm</span>
-          </div>
-          <h1 className="font-display text-[34px] leading-[1.1] text-foreground md:text-[52px]">
-            BC's best beverages,<br />
-            <span className="italic text-muted-foreground">at your door in under an hour.</span>
-          </h1>
-          <p className="mt-4 max-w-[520px] text-[14px] text-muted-foreground">
-            Wholesale from Vancouver's top retailers. LDB floor pricing on every bottle. No middlemen, no markup.
-          </p>
-
-          <div className="mt-7 grid grid-cols-2 gap-3 sm:grid-cols-4">
-            {[
-              { val: `${products.length}`, label: "PRODUCTS" },
-              { val: "~45m", label: "AVG DELIVERY" },
-              { val: String(retailers.length), label: "RETAILERS" },
-              { val: "$0", label: "MARKUP" },
-            ].map((s) => (
-              <div key={s.label} className="rounded-xl border border-border bg-surface p-4 shadow-soft">
-                <div className="font-display text-[26px] leading-none text-foreground">{s.val}</div>
-                <div className="font-mono mt-2 text-[10px] font-medium uppercase tracking-wider text-muted-foreground">{s.label}</div>
+      <section className="bg-hero-gradient relative overflow-hidden px-5 py-10">
+        <div className="pointer-events-none absolute -right-10 -top-16 h-72 w-72 rounded-full bg-primary/10" />
+        <div className="pointer-events-none absolute -bottom-20 -left-8 h-56 w-56 rounded-full bg-teal/10" />
+        <div className="relative z-[1] mx-auto max-w-[1200px]">
+          <div className="flex flex-wrap items-center justify-between gap-6">
+            <div className="flex-1 basis-[340px]">
+              <div className="mb-3.5 inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/10 px-3 py-1">
+                <span className="animate-glow-pulse inline-block h-[7px] w-[7px] rounded-full bg-teal shadow-[0_0_6px_oklch(0.7_0.13_175)]" />
+                <span className="text-[11px] font-bold tracking-wider text-white/90">SAME-DAY DELIVERY AVAILABLE</span>
               </div>
-            ))}
+              <h1 className="mb-3 text-[32px] font-black leading-[1.15] tracking-tight text-white md:text-[40px]">
+                BC's best beverages,<br />
+                <span className="text-gradient-brand">at your door in under an hour.</span>
+              </h1>
+              <p className="mb-5 max-w-[420px] text-sm leading-relaxed text-white/70">
+                Order from Vancouver's top retailers before 2pm and get your stock delivered same-day. LDB wholesale floor pricing on every product. No middlemen. No markups.
+              </p>
+              <div className="flex flex-wrap gap-2.5">
+                {["LDB compliant pricing", "LCRB licensed carriers", "No hidden fees"].map((t) => (
+                  <div key={t} className="flex items-center gap-1.5 rounded-full border border-white/15 bg-white/10 px-3 py-1">
+                    <span className="text-[11px] font-extrabold text-teal">✓</span>
+                    <span className="text-[11px] font-medium text-white/85">{t}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="flex flex-wrap gap-3">
+              {[
+                { val: `${products.length}+`, label: "Products", sub: "live catalog", icon: "📦" },
+                { val: "~45 min", label: "Avg delivery", sub: "order before 2pm", icon: "🚗" },
+                { val: String(retailers.length), label: "Vancouver retailers", sub: "locally sourced", icon: "🏪" },
+                { val: "$0", label: "Markup", sub: "LDB floor guaranteed", icon: "💰" },
+              ].map((s) => (
+                <div key={s.label} className="min-w-[100px] rounded-2xl border border-white/15 bg-white/10 px-4 py-3.5 text-center backdrop-blur">
+                  <div className="mb-1 text-xl">{s.icon}</div>
+                  <div className="text-[22px] font-black leading-none text-white">{s.val}</div>
+                  <div className="mt-0.5 text-[11px] font-bold text-white/90">{s.label}</div>
+                  <div className="mt-0.5 text-[10px] text-white/50">{s.sub}</div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      <main className="mx-auto max-w-[1200px] px-6 py-6">
+      <main className="mx-auto max-w-[1200px] px-5 py-5">
         <AIInsightsPanel cart={cart} products={products} category={activeCat} />
 
-        {/* Category pills */}
-        <div className="no-scrollbar -mx-6 mb-5 flex gap-2 overflow-x-auto px-6 pb-1">
+        <div className="-mx-1 mb-3.5 flex gap-2 overflow-x-auto px-1 pb-2">
           {CATEGORIES.map((cat) => {
             const active = activeCat === cat.label;
             return (
-              <button
-                key={cat.label}
-                onClick={() => setActiveCat(cat.label)}
-                className={`flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-[10px] border px-[18px] py-[10px] text-[13px] font-semibold transition ${
-                  active
-                    ? "border-foreground bg-foreground text-background"
-                    : "border-border bg-surface text-muted-foreground hover:border-foreground hover:text-foreground"
-                }`}
-              >
+              <button key={cat.label} onClick={() => setActiveCat(cat.label)}
+                className={`flex items-center gap-1.5 whitespace-nowrap rounded-full border-[1.5px] px-3.5 py-1.5 text-xs font-semibold transition ${active ? "border-primary bg-primary text-primary-foreground shadow-glow" : "border-border bg-surface text-foreground hover:border-primary"}`}>
                 <span>{cat.emoji}</span> {cat.label}
               </button>
             );
           })}
         </div>
 
-        {/* Filter row */}
         <div className="mb-5 flex flex-wrap items-center gap-2.5">
-          <select
-            value={activeRetailer}
-            onChange={(e) => setActiveRetailer(e.target.value)}
-            className="font-mono cursor-pointer rounded-lg border border-border bg-surface px-3 py-2 text-[11px] uppercase tracking-wider text-foreground outline-none hover:border-foreground"
-          >
+          <select value={activeRetailer} onChange={(e) => setActiveRetailer(e.target.value)}
+            className="cursor-pointer rounded-lg border-[1.5px] border-border bg-surface px-3 py-1.5 text-xs font-semibold text-foreground outline-none">
             <option>All Retailers</option>
             {retailers.map((r) => <option key={r.id}>{r.name}</option>)}
           </select>
-          <select
-            value={sortBy}
-            onChange={(e) => setSortBy(e.target.value)}
-            className="font-mono cursor-pointer rounded-lg border border-border bg-surface px-3 py-2 text-[11px] uppercase tracking-wider text-foreground outline-none hover:border-foreground"
-          >
+          <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}
+            className="cursor-pointer rounded-lg border-[1.5px] border-border bg-surface px-3 py-1.5 text-xs font-semibold text-foreground outline-none">
             <option value="popular">Most Popular</option>
             <option value="rating">Top Rated</option>
-            <option value="price_asc">Price: Low–High</option>
-            <option value="price_desc">Price: High–Low</option>
+            <option value="price_asc">Price: Low to High</option>
+            <option value="price_desc">Price: High to Low</option>
             <option value="delivery">Fastest Delivery</option>
           </select>
-          <div className="font-mono ml-auto text-[11px] uppercase tracking-wider text-muted-foreground">
+          <div className="ml-auto text-xs font-medium text-muted-foreground">
             {filtered.length} product{filtered.length !== 1 ? "s" : ""}
           </div>
         </div>
@@ -311,21 +268,19 @@ function Marketplace() {
             <div className="mb-2 text-base font-bold text-foreground">No products found</div>
           </div>
         ) : (
-          <div className="grid grid-cols-[repeat(auto-fill,minmax(220px,1fr))] gap-4">
+          <div className="grid grid-cols-[repeat(auto-fill,minmax(210px,1fr))] gap-4">
             {filtered.map((p) => (
               <ProductCard key={p.id} product={p} qty={cart[p.id] || 0} onAdd={addToCart} onRemove={removeFromCart} />
             ))}
           </div>
         )}
 
-        <footer className="mt-12 rounded-xl border border-border bg-surface-muted p-5">
-          <p className="font-mono text-[10px] uppercase leading-relaxed tracking-wider text-muted-foreground">
-            ReStok BC Wholesale · Licensed retailers only · LCRB compliant · LDB floor pricing · Platform fee 3.5% charged to retailer · support@restok.ca
+        <footer className="mt-10 rounded-xl border border-border bg-surface px-5 py-3.5 shadow-soft">
+          <p className="text-[10px] leading-relaxed text-muted-foreground">
+            <strong className="text-foreground">ReStok BC Wholesale Platform</strong> — Licensed retailers only. All transactions comply with LCRB regulations and LDB wholesale floor pricing. Delivery fulfilled by LCRB-licensed carriers. Recipient must present licensee ID on delivery. Platform fee of 3.5% charged to retailer on each settled order. Questions? support@restok.ca
           </p>
         </footer>
       </main>
-
-
 
       {cartOpen && (
         <>

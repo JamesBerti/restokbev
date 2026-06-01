@@ -11,9 +11,9 @@ type Insight = {
 };
 
 const TABS = [
-  { key: "trends", label: "MARKET TRENDS" },
-  { key: "reorder", label: "REORDER TIPS" },
-  { key: "pairing", label: "FOOD PAIRING" },
+  { key: "trends", label: "📈 Market Trends" },
+  { key: "reorder", label: "🔄 Reorder Tips" },
+  { key: "pairing", label: "🍽️ Food Pairing" },
 ] as const;
 
 type Mode = (typeof TABS)[number]["key"];
@@ -61,18 +61,18 @@ export function AIInsightsPanel({
     return () => {
       cancelled = true;
     };
+    // products is a large array; key on length + cart contents + filters
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mode, category, JSON.stringify(cart)]);
 
   return (
-    <div className="mb-6 rounded-[18px] border border-[color:var(--color-gold)]/30 bg-gold-soft p-5 shadow-soft">
+    <div className="mb-6 rounded-2xl border border-border bg-surface p-5 shadow-soft">
       <div className="mb-3 flex flex-wrap items-center justify-between gap-2.5">
         <div className="flex items-center gap-2.5">
-          <span className="font-mono inline-flex items-center gap-1.5 rounded-full bg-foreground px-2.5 py-1 text-[10px] font-medium tracking-wider text-gold">
-            <span className="h-1.5 w-1.5 animate-glow-pulse rounded-full bg-gold" />
-            AI INSIGHTS
-          </span>
-          <span className="font-display text-[15px] italic text-foreground">Live merchandising signals</span>
+          <div className="bg-brand-gradient rounded-md px-2.5 py-1 text-[11px] font-extrabold tracking-wide text-white">
+            ✦ AI Insights
+          </div>
+          <span className="text-[13px] text-muted-foreground">Live, powered by Lovable AI</span>
         </div>
         <div className="flex flex-wrap gap-1.5">
           {TABS.map((t) => {
@@ -81,10 +81,10 @@ export function AIInsightsPanel({
               <button
                 key={t.key}
                 onClick={() => setMode(t.key)}
-                className={`font-mono rounded-md border px-3 py-1.5 text-[10px] font-medium tracking-wider transition ${
+                className={`rounded-md border px-3 py-1 text-xs font-semibold transition ${
                   active
-                    ? "border-[color:var(--color-gold)] bg-white text-[color:var(--color-gold)]"
-                    : "border-transparent text-muted-foreground hover:text-foreground"
+                    ? "border-primary bg-primary-light text-primary-dark"
+                    : "border-border bg-transparent text-muted-foreground hover:text-foreground"
                 }`}
               >
                 {t.label}
@@ -105,7 +105,7 @@ export function AIInsightsPanel({
           {[0, 1, 2].map((i) => (
             <div
               key={i}
-              className="h-20 flex-1 animate-pulse rounded-xl bg-white/60"
+              className="h-20 flex-1 animate-pulse rounded-xl bg-surface-muted"
               style={{ animationDelay: `${i * 0.15}s` }}
             />
           ))}
@@ -115,7 +115,7 @@ export function AIInsightsPanel({
           {items.map((ins, i) => (
             <div
               key={`${mode}-${i}`}
-              className="animate-fade-up flex-1 basis-[220px] rounded-xl border border-border bg-white p-4"
+              className="animate-fade-up flex-1 basis-[220px] rounded-xl border border-border bg-surface-muted p-3.5"
               style={{ animationDelay: `${i * 0.08}s` }}
             >
               <div className="mb-1.5 flex items-start justify-between gap-2">
@@ -124,10 +124,10 @@ export function AIInsightsPanel({
                   <span className="text-xs font-bold text-foreground">{ins.title}</span>
                 </div>
                 {ins.trend === "up" && (
-                  <span className="font-mono whitespace-nowrap text-[10px] font-medium text-success">↑ UP</span>
+                  <span className="whitespace-nowrap text-[11px] font-bold text-teal">↑ Up</span>
                 )}
                 {ins.trend === "down" && (
-                  <span className="font-mono whitespace-nowrap text-[10px] font-medium text-destructive">↓ DOWN</span>
+                  <span className="whitespace-nowrap text-[11px] font-bold text-destructive">↓ Down</span>
                 )}
               </div>
               <div className="text-xs leading-relaxed text-muted-foreground">{ins.body}</div>
