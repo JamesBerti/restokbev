@@ -89,6 +89,29 @@ function LiveTrackPage() {
 
   useEffect(() => {
     const load = async () => {
+      // Demo mode — show a synthetic order so the screen can be previewed
+      // without placing a real order.
+      if (id === "demo") {
+        const now = new Date();
+        setOrder({
+          id: "demo-0001",
+          retailer_id: "demo",
+          subtotal: 312,
+          total: 342.92,
+          status: "out_for_delivery",
+          created_at: new Date(now.getTime() - 14 * 60_000).toISOString(),
+          updated_at: now.toISOString(),
+        });
+        setRetailerName("Marquis Wine Cellars");
+        setItems([
+          { id: "d1", product_id: "p1", name: "Burrowing Owl Pinot Noir 2022", unit_price: 38, qty: 6 },
+          { id: "d2", product_id: "p2", name: "Phantom Creek Chardonnay 2022", unit_price: 36, qty: 2 },
+          { id: "d3", product_id: "p3", name: "Persephone Pale Ale", unit_price: 52, qty: 1 },
+        ]);
+        setSavings(96);
+        return;
+      }
+
       const { data: o } = await supabase
         .from("orders")
         .select("id,retailer_id,subtotal,total,status,created_at,updated_at")
@@ -105,7 +128,6 @@ function LiveTrackPage() {
       setItems(lines);
       if (r?.name) setRetailerName(r.name);
 
-      // Compute LDB savings from current product floors.
       if (lines.length) {
         const ids = lines.map((l) => l.product_id);
         const { data: prods } = await supabase
