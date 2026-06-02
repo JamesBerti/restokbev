@@ -116,8 +116,17 @@ function OrderHistoryPage() {
                       <div className="text-base font-bold text-foreground">{retailers[o.retailer_id] ?? "Retailer"}</div>
                       <div className="text-[11px] text-muted-foreground">Order #{o.id.slice(0, 8)}</div>
                     </div>
-                    <div className={`rounded-full px-3 py-1 text-xs font-bold ${statusToneClass(o.status)}`}>
-                      {formatStatus(o.status)}
+                    <div className="flex items-center gap-2">
+                      <Link
+                        to="/orders/track/$id"
+                        params={{ id: o.id }}
+                        className="rounded-full bg-success px-3 py-1 text-xs font-bold text-success-foreground hover:opacity-90"
+                      >
+                        Track live
+                      </Link>
+                      <div className={`rounded-full px-3 py-1 text-xs font-bold ${statusToneClass(o.status)}`}>
+                        {formatStatus(o.status)}
+                      </div>
                     </div>
                   </div>
 
