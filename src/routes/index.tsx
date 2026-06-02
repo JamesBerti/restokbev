@@ -150,33 +150,30 @@ function Marketplace() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <header className="sticky top-0 z-[100] border-b border-border bg-surface shadow-soft">
+      <header className="bg-nav-navy sticky top-0 z-[100] shadow-soft">
         <div className="mx-auto flex h-16 max-w-[1200px] items-center gap-3.5 px-5">
-          <div className="flex shrink-0 items-center gap-2">
-            <div className="bg-brand-gradient rounded-lg px-3 py-1 text-[15px] font-black tracking-tight text-white">ReStok</div>
-            <span className="hidden text-[11px] font-medium text-muted-foreground sm:inline">Vancouver Wholesale</span>
-          </div>
+          <Wordmark />
 
-          <div className="flex flex-1 items-center gap-2 rounded-xl border-[1.5px] border-border bg-background px-3.5 py-2 focus-within:border-primary">
-            <span className="text-base text-muted-foreground">🔍</span>
+          <div className="flex flex-1 items-center gap-2 rounded-xl border border-white/15 bg-white/5 px-3.5 py-2 focus-within:border-white/40">
+            <span className="text-base text-white/60">🔍</span>
             <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search products, categories..."
-              className="w-full border-none bg-transparent text-[13px] outline-none placeholder:text-muted-foreground" />
-            {search && <button onClick={() => setSearch("")} className="text-sm text-muted-foreground">✕</button>}
+              className="w-full border-none bg-transparent text-[13px] text-white outline-none placeholder:text-white/50" />
+            {search && <button onClick={() => setSearch("")} className="text-sm text-white/60">✕</button>}
           </div>
 
-          <nav className="hidden items-center gap-3 text-xs font-bold md:flex">
-            {user && <Link to="/orders" className="text-muted-foreground hover:text-foreground">My orders</Link>}
-            {isRetailer && <Link to="/retailer" className="text-muted-foreground hover:text-foreground">Retailer</Link>}
-            {isAdmin && <Link to="/admin" className="text-muted-foreground hover:text-foreground">Admin</Link>}
+          <nav className="hidden items-center gap-3 text-xs font-semibold md:flex">
+            {user && <Link to="/orders" className="text-white/70 hover:text-white">My orders</Link>}
+            {isRetailer && <Link to="/retailer" className="text-white/70 hover:text-white">Retailer</Link>}
+            {isAdmin && <Link to="/admin" className="text-white/70 hover:text-white">Admin</Link>}
             {user ? (
-              <button onClick={signOut} className="text-muted-foreground hover:text-foreground">Sign out</button>
+              <button onClick={signOut} className="text-white/70 hover:text-white">Sign out</button>
             ) : (
-              <Link to="/login" className="text-muted-foreground hover:text-foreground">Sign in</Link>
+              <Link to="/login" className="text-white/70 hover:text-white">Sign in</Link>
             )}
           </nav>
 
           <button onClick={() => setCartOpen(true)}
-            className={`flex shrink-0 items-center gap-1.5 rounded-xl border-[1.5px] px-4 py-2 text-[13px] font-bold transition ${cartCount > 0 ? "border-primary bg-primary text-primary-foreground shadow-glow" : "border-border bg-surface text-foreground hover:border-primary"}`}>
+            className={`flex shrink-0 items-center gap-1.5 rounded-xl border px-4 py-2 text-[13px] font-bold transition ${cartCount > 0 ? "border-white bg-white text-[#0f1e3d]" : "border-white/20 bg-white/5 text-white hover:border-white/40"}`}>
             🛒
             {cartCount > 0 ? (
               <span>{cartCount} item{cartCount > 1 ? "s" : ""} · <strong>${cartSubtotal.toFixed(2)}</strong></span>
@@ -185,50 +182,27 @@ function Marketplace() {
         </div>
       </header>
 
-      <section className="bg-hero-gradient relative overflow-hidden px-5 py-10">
-        <div className="pointer-events-none absolute -right-10 -top-16 h-72 w-72 rounded-full bg-primary/10" />
-        <div className="pointer-events-none absolute -bottom-20 -left-8 h-56 w-56 rounded-full bg-teal/10" />
-        <div className="relative z-[1] mx-auto max-w-[1200px]">
-          <div className="flex flex-wrap items-center justify-between gap-6">
-            <div className="flex-1 basis-[340px]">
-              <div className="mb-3.5 inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/10 px-3 py-1">
-                <span className="animate-glow-pulse inline-block h-[7px] w-[7px] rounded-full bg-teal shadow-[0_0_6px_oklch(0.7_0.13_175)]" />
-                <span className="text-[11px] font-bold tracking-wider text-white/90">SAME-DAY DELIVERY AVAILABLE</span>
-              </div>
-              <h1 className="mb-3 text-[32px] font-black leading-[1.15] tracking-tight text-white md:text-[40px]">
-                BC's best beverages,<br />
-                <span className="text-gradient-brand">at your door in under an hour.</span>
-              </h1>
-              <p className="mb-5 max-w-[420px] text-sm leading-relaxed text-white/70">
-                Order from Vancouver's top retailers before 2pm and get your stock delivered same-day. LDB wholesale floor pricing on every product. No middlemen. No markups.
-              </p>
-              <div className="flex flex-wrap gap-2.5">
-                {["LDB compliant pricing", "LCRB licensed carriers", "No hidden fees"].map((t) => (
-                  <div key={t} className="flex items-center gap-1.5 rounded-full border border-white/15 bg-white/10 px-3 py-1">
-                    <span className="text-[11px] font-extrabold text-teal">✓</span>
-                    <span className="text-[11px] font-medium text-white/85">{t}</span>
-                  </div>
-                ))}
-              </div>
+      <AIAlertBanner />
+
+      <section
+        className="px-5 py-4"
+        style={{ background: "#eff6ff", borderTop: "1px solid #bfdbfe", borderBottom: "1px solid #bfdbfe" }}
+      >
+        <div className="mx-auto flex max-w-[1200px] flex-wrap items-center justify-around gap-4">
+          {[
+            { val: `${products.length}+`, label: "Products" },
+            { val: "~45 min", label: "Avg delivery" },
+            { val: String(retailers.length), label: "Retailers" },
+            { val: "$0", label: "Markup" },
+          ].map((s) => (
+            <div key={s.label} className="text-center">
+              <div style={{ color: "#1a56db", fontWeight: 700, fontSize: "20px", lineHeight: 1 }}>{s.val}</div>
+              <div style={{ color: "#64748b", fontWeight: 600, fontSize: "10px", marginTop: 4 }}>{s.label}</div>
             </div>
-            <div className="flex flex-wrap gap-3">
-              {[
-                { val: `${products.length}+`, label: "Products", sub: "live catalog", icon: "📦" },
-                { val: "~45 min", label: "Avg delivery", sub: "order before 2pm", icon: "🚗" },
-                { val: String(retailers.length), label: "Vancouver retailers", sub: "locally sourced", icon: "🏪" },
-                { val: "$0", label: "Markup", sub: "LDB floor guaranteed", icon: "💰" },
-              ].map((s) => (
-                <div key={s.label} className="min-w-[100px] rounded-2xl border border-white/15 bg-white/10 px-4 py-3.5 text-center backdrop-blur">
-                  <div className="mb-1 text-xl">{s.icon}</div>
-                  <div className="text-[22px] font-black leading-none text-white">{s.val}</div>
-                  <div className="mt-0.5 text-[11px] font-bold text-white/90">{s.label}</div>
-                  <div className="mt-0.5 text-[10px] text-white/50">{s.sub}</div>
-                </div>
-              ))}
-            </div>
-          </div>
+          ))}
         </div>
       </section>
+
 
       <main className="mx-auto max-w-[1200px] px-5 py-5">
         <AIInsightsPanel cart={cart} products={products} category={activeCat} />
