@@ -88,16 +88,27 @@ function OrderHistoryPage() {
       </header>
 
       <main className="mx-auto max-w-[1100px] px-5 py-8">
-        <h1 className="mb-1 text-2xl font-black text-foreground">Your orders</h1>
-        <p className="mb-6 text-sm text-muted-foreground">
-          Live status updates from your retailers. Multi-retailer carts are split into separate orders.
-        </p>
+        <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <h1 className="mb-1 text-2xl font-black text-foreground">Your orders</h1>
+            <p className="text-sm text-muted-foreground">
+              Live status updates from your retailers. Multi-retailer carts are split into separate orders.
+            </p>
+          </div>
+          <Link
+            to="/orders/track/$id"
+            params={{ id: "demo" }}
+            className="rounded-full bg-success px-4 py-2 text-xs font-bold text-success-foreground shadow-soft hover:opacity-90"
+          >
+            🚚 View live tracking demo
+          </Link>
+        </div>
 
         {orders.length === 0 ? (
           <div className="rounded-2xl border border-border bg-surface p-10 text-center shadow-soft">
             <div className="mb-2 text-4xl">📦</div>
             <div className="text-base font-bold text-foreground">No orders yet</div>
-            <div className="mt-1 text-sm text-muted-foreground">Place your first wholesale order from the marketplace.</div>
+            <div className="mt-1 text-sm text-muted-foreground">Place your first wholesale order from the marketplace — or preview the live tracking screen above.</div>
             <Link to="/" className="mt-4 inline-block rounded-lg bg-primary px-4 py-2 text-sm font-bold text-primary-foreground">
               Browse marketplace
             </Link>
