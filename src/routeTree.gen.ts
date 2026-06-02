@@ -15,6 +15,7 @@ import { Route as OrdersRouteImport } from './routes/orders'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as OrdersTrackIdRouteImport } from './routes/orders.track.$id'
 
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
@@ -46,37 +47,59 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OrdersTrackIdRoute = OrdersTrackIdRouteImport.update({
+  id: '/track/$id',
+  path: '/track/$id',
+  getParentRoute: () => OrdersRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/login': typeof LoginRoute
-  '/orders': typeof OrdersRoute
+  '/orders': typeof OrdersRouteWithChildren
   '/retailer': typeof RetailerRoute
   '/signup': typeof SignupRoute
+  '/orders/track/$id': typeof OrdersTrackIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/login': typeof LoginRoute
-  '/orders': typeof OrdersRoute
+  '/orders': typeof OrdersRouteWithChildren
   '/retailer': typeof RetailerRoute
   '/signup': typeof SignupRoute
+  '/orders/track/$id': typeof OrdersTrackIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/login': typeof LoginRoute
-  '/orders': typeof OrdersRoute
+  '/orders': typeof OrdersRouteWithChildren
   '/retailer': typeof RetailerRoute
   '/signup': typeof SignupRoute
+  '/orders/track/$id': typeof OrdersTrackIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/admin' | '/login' | '/orders' | '/retailer' | '/signup'
+  fullPaths:
+    | '/'
+    | '/admin'
+    | '/login'
+    | '/orders'
+    | '/retailer'
+    | '/signup'
+    | '/orders/track/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/admin' | '/login' | '/orders' | '/retailer' | '/signup'
+  to:
+    | '/'
+    | '/admin'
+    | '/login'
+    | '/orders'
+    | '/retailer'
+    | '/signup'
+    | '/orders/track/$id'
   id:
     | '__root__'
     | '/'
@@ -85,13 +108,14 @@ export interface FileRouteTypes {
     | '/orders'
     | '/retailer'
     | '/signup'
+    | '/orders/track/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRoute
   LoginRoute: typeof LoginRoute
-  OrdersRoute: typeof OrdersRoute
+  OrdersRoute: typeof OrdersRouteWithChildren
   RetailerRoute: typeof RetailerRoute
   SignupRoute: typeof SignupRoute
 }
@@ -140,14 +164,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/orders/track/$id': {
+      id: '/orders/track/$id'
+      path: '/track/$id'
+      fullPath: '/orders/track/$id'
+      preLoaderRoute: typeof OrdersTrackIdRouteImport
+      parentRoute: typeof OrdersRoute
+    }
   }
 }
+
+interface OrdersRouteChildren {
+  OrdersTrackIdRoute: typeof OrdersTrackIdRoute
+}
+
+const OrdersRouteChildren: OrdersRouteChildren = {
+  OrdersTrackIdRoute: OrdersTrackIdRoute,
+}
+
+const OrdersRouteWithChildren =
+  OrdersRoute._addFileChildren(OrdersRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRoute,
   LoginRoute: LoginRoute,
-  OrdersRoute: OrdersRoute,
+  OrdersRoute: OrdersRouteWithChildren,
   RetailerRoute: RetailerRoute,
   SignupRoute: SignupRoute,
 }
