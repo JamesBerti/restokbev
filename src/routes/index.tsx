@@ -1,10 +1,12 @@
 import { useEffect, useMemo, useState } from "react";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
+import { AIAlertBanner } from "@/components/restok/AIAlertBanner";
 import { AIInsightsPanel } from "@/components/restok/AIInsightsPanel";
 import { CartDrawer } from "@/components/restok/CartDrawer";
 import { OrderConfirmation } from "@/components/restok/OrderConfirmation";
 import { ProductCard } from "@/components/restok/ProductCard";
+import { Wordmark } from "@/components/restok/Wordmark";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
 import { placeOrder } from "@/lib/orders.functions";
