@@ -5,7 +5,7 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-sans: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -53,60 +53,60 @@
 }
 
 :root {
-  --radius: 0.75rem;
+  --radius: 0.625rem; /* 10px */
 
-  /* Brand */
-  --background: oklch(0.98 0.005 250);
-  --foreground: oklch(0.18 0.02 260);
+  /* Brand — flat white + navy + ReStok blue */
+  --background: #ffffff;
+  --foreground: #0f172a;
 
-  --surface: oklch(1 0 0);
-  --surface-muted: oklch(0.97 0.008 250);
+  --surface: #ffffff;
+  --surface-muted: #f8fafc;
 
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.18 0.02 260);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.18 0.02 260);
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  --popover: #ffffff;
+  --popover-foreground: #0f172a;
 
   /* Primary = ReStok blue */
-  --primary: oklch(0.68 0.16 245);
-  --primary-foreground: oklch(1 0 0);
-  --primary-dark: oklch(0.55 0.18 250);
-  --primary-light: oklch(0.96 0.03 245);
+  --primary: #1a56db;
+  --primary-foreground: #ffffff;
+  --primary-dark: #1e40af;
+  --primary-light: #eff6ff;
 
-  --secondary: oklch(0.96 0.008 250);
-  --secondary-foreground: oklch(0.25 0.02 260);
+  --secondary: #f1f5f9;
+  --secondary-foreground: #0f172a;
 
-  --muted: oklch(0.96 0.008 250);
-  --muted-foreground: oklch(0.5 0.015 260);
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
 
-  --accent: oklch(0.96 0.03 245);
-  --accent-foreground: oklch(0.55 0.18 250);
+  --accent: #eff6ff;
+  --accent-foreground: #1a56db;
 
-  /* Teal = trust / delivery */
-  --teal: oklch(0.7 0.13 175);
-  --teal-foreground: oklch(1 0 0);
-  --teal-soft: oklch(0.96 0.04 175);
+  /* Teal kept for legacy refs, mapped to brand blue family */
+  --teal: #1a56db;
+  --teal-foreground: #ffffff;
+  --teal-soft: #eff6ff;
 
-  --gold: oklch(0.78 0.15 75);
-  --gold-soft: oklch(0.97 0.05 85);
+  --gold: #d97706;
+  --gold-soft: #fef3c7;
 
-  --success: oklch(0.72 0.16 150);
-  --success-foreground: oklch(1 0 0);
-  --success-soft: oklch(0.97 0.04 150);
+  --success: #16a34a;
+  --success-foreground: #042010;
+  --success-soft: #f0fdf4;
 
-  --destructive: oklch(0.62 0.22 25);
-  --destructive-foreground: oklch(1 0 0);
-  --destructive-soft: oklch(0.97 0.03 25);
+  --destructive: #dc2626;
+  --destructive-foreground: #ffffff;
+  --destructive-soft: #fee2e2;
 
-  --border: oklch(0.92 0.01 255);
-  --input: oklch(0.92 0.01 255);
-  --ring: oklch(0.68 0.16 245);
+  --border: #e2e8f0;
+  --input: #e2e8f0;
+  --ring: #1a56db;
 
-  --chart-1: oklch(0.68 0.16 245);
-  --chart-2: oklch(0.7 0.13 175);
-  --chart-3: oklch(0.78 0.15 75);
-  --chart-4: oklch(0.62 0.22 25);
-  --chart-5: oklch(0.72 0.16 150);
+  --chart-1: #1a56db;
+  --chart-2: #16a34a;
+  --chart-3: #d97706;
+  --chart-4: #dc2626;
+  --chart-5: #0f1e3d;
 }
 
 .dark {
@@ -149,33 +149,39 @@
 
 @layer utilities {
   .bg-hero-gradient {
-    background: linear-gradient(135deg, #0a2540 0%, #1a4a7a 60%, #1e5fa0 100%);
+    background: linear-gradient(135deg, #0f1e3d 0%, #1a3a6b 55%, #1d4d8c 100%);
   }
   .text-gradient-brand {
-    background: linear-gradient(
-      90deg,
-      oklch(0.7 0.13 175),
-      oklch(0.68 0.16 245)
-    );
+    background: linear-gradient(90deg, #60a5fa, #ffffff);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     color: transparent;
   }
   .bg-brand-gradient {
-    background: linear-gradient(
-      135deg,
-      oklch(0.68 0.16 245) 0%,
-      oklch(0.7 0.13 175) 100%
-    );
+    background: #0f1e3d;
   }
   .bg-cta-gradient {
-    background: linear-gradient(
-      135deg,
-      oklch(0.68 0.16 245) 0%,
-      oklch(0.55 0.18 250) 100%
-    );
+    background: linear-gradient(135deg, #1a56db 0%, #1e40af 100%);
   }
+  .bg-nav-navy {
+    background-color: #0f1e3d;
+    background-image: linear-gradient(120deg, rgba(26, 86, 219, 0.28) 0%, transparent 55%);
+  }
+  .restok-icon {
+    background: linear-gradient(145deg, #22c55e, #16a34a);
+    box-shadow: 0 2px 8px rgba(22, 163, 74, 0.4);
+  }
+  @keyframes blob-a {
+    from { transform: translate(0, 0) scale(1); }
+    to { transform: translate(-8px, 7px) scale(1.1); }
+  }
+  @keyframes blob-b {
+    from { transform: translate(0, 0) scale(1); }
+    to { transform: translate(7px, -5px) scale(0.92); }
+  }
+  .animate-blob-a { animation: blob-a 6s ease-in-out infinite alternate; }
+  .animate-blob-b { animation: blob-b 8s ease-in-out infinite alternate; }
 }
 
 @keyframes slide-in-right {
