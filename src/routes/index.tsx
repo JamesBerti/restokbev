@@ -175,6 +175,18 @@ function Marketplace() {
             )}
           </nav>
 
+          <button
+            onClick={() => setReferralOpen(true)}
+            aria-label="Refer and earn"
+            className="relative flex shrink-0 items-center justify-center rounded-xl border border-white/15 bg-white/5 p-2 text-white/60 transition hover:border-white/40 hover:text-white"
+          >
+            <Gift size={20} strokeWidth={1.75} />
+            <span
+              className="absolute right-1 top-1 h-2 w-2 rounded-full"
+              style={{ background: "#f59e0b", boxShadow: "0 0 0 2px #0f1e3d" }}
+            />
+          </button>
+
           <button onClick={() => setCartOpen(true)}
             className={`flex shrink-0 items-center gap-1.5 rounded-xl border px-4 py-2 text-[13px] font-bold transition ${cartCount > 0 ? "border-white bg-white text-[#0f1e3d]" : "border-white/20 bg-white/5 text-white hover:border-white/40"}`}>
             🛒
