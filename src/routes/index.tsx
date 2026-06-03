@@ -3,7 +3,8 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { Gift } from "lucide-react";
 import { AIAlertBanner } from "@/components/restok/AIAlertBanner";
-import { AIInsightsPanel } from "@/components/restok/AIInsightsPanel";
+import { Hero } from "@/components/restok/Hero";
+import { MarketTrends } from "@/components/restok/MarketTrends";
 import { CartDrawer } from "@/components/restok/CartDrawer";
 import { ReferralDrawer } from "@/components/restok/ReferralDrawer";
 import { OrderConfirmation } from "@/components/restok/OrderConfirmation";
@@ -197,30 +198,14 @@ function Marketplace() {
         </div>
       </header>
 
+      <Hero />
+
       <AIAlertBanner />
 
-      <section
-        className="px-5 py-4"
-        style={{ background: "#eff6ff", borderTop: "1px solid #bfdbfe", borderBottom: "1px solid #bfdbfe" }}
-      >
-        <div className="mx-auto flex max-w-[1200px] flex-wrap items-center justify-around gap-4">
-          {[
-            { val: `${products.length}+`, label: "Products" },
-            { val: "~45 min", label: "Avg delivery" },
-            { val: String(retailers.length), label: "Retailers" },
-            { val: "$0", label: "Markup" },
-          ].map((s) => (
-            <div key={s.label} className="text-center">
-              <div style={{ color: "#1a56db", fontWeight: 700, fontSize: "20px", lineHeight: 1 }}>{s.val}</div>
-              <div style={{ color: "#64748b", fontWeight: 600, fontSize: "10px", marginTop: 4 }}>{s.label}</div>
-            </div>
-          ))}
-        </div>
-      </section>
-
+      <MarketTrends />
 
       <main className="mx-auto max-w-[1200px] px-5 py-5">
-        <AIInsightsPanel cart={cart} products={products} category={activeCat} />
+
 
         <div className="-mx-1 mb-3.5 flex gap-2 overflow-x-auto px-1 pb-2">
           {CATEGORIES.map((cat) => {
