@@ -289,6 +289,4 @@ function Marketplace() {
     </div>
   );
 }
-    </div>
-  );
-}
+
