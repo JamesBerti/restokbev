@@ -18,6 +18,25 @@ const TABS = [
 
 type Mode = (typeof TABS)[number]["key"];
 
+const FALLBACK: Record<Mode, Insight[]> = {
+  trends: [
+    { icon: "🌸", title: "Market Trend", body: "Rosé demand up 34% across Vancouver venues this month.", trend: "up" },
+    { icon: "🍷", title: "Market Trend", body: "Okanagan Pinot Noir trending in Yaletown bars.", trend: "up" },
+    { icon: "🍺", title: "Market Trend", body: "Local craft IPA volume steady week-over-week.", trend: "flat" },
+  ],
+  reorder: [
+    { icon: "🔄", title: "Reorder Tip", body: "Quails' Gate Chardonnay due for reorder based on your 6-day cycle.", trend: "up" },
+    { icon: "📦", title: "Reorder Tip", body: "Stock of Burrowing Owl Pinot Noir below par — order 6 bottles.", trend: "down" },
+    { icon: "🥃", title: "Reorder Tip", body: "Arbutus Gin usage steady; reorder next Tuesday.", trend: "flat" },
+  ],
+  pairing: [
+    { icon: "🍽️", title: "Food Pairing", body: "Pinot Noir pairs with salmon and mushroom risotto.", trend: "up" },
+    { icon: "🧀", title: "Food Pairing", body: "Sauvignon Blanc lifts goat cheese and herb dishes.", trend: "flat" },
+    { icon: "🥩", title: "Food Pairing", body: "Cabernet pairs with dry-aged steak and roasted root veg.", trend: "up" },
+  ],
+};
+
+
 export function AIInsightsPanel({
   cart,
   products,
