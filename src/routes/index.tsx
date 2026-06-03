@@ -284,6 +284,11 @@ function Marketplace() {
       {confirmedTotal !== null && (
         <OrderConfirmation total={confirmedTotal} onDone={() => setConfirmedTotal(null)} />
       )}
+
+      {referralOpen && <ReferralDrawer onClose={() => setReferralOpen(false)} />}
+    </div>
+  );
+}
     </div>
   );
 }
