@@ -46,6 +46,7 @@ function Marketplace() {
   const [sortBy, setSortBy] = useState("popular");
   const [cart, setCart] = useState<Cart>({});
   const [cartOpen, setCartOpen] = useState(false);
+  const [referralOpen, setReferralOpen] = useState(false);
   const [confirmedTotal, setConfirmedTotal] = useState<number | null>(null);
   const [retailers, setRetailers] = useState<Retailer[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
