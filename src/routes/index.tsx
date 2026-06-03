@@ -1,9 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
+import { Gift } from "lucide-react";
 import { AIAlertBanner } from "@/components/restok/AIAlertBanner";
 import { AIInsightsPanel } from "@/components/restok/AIInsightsPanel";
 import { CartDrawer } from "@/components/restok/CartDrawer";
+import { ReferralDrawer } from "@/components/restok/ReferralDrawer";
 import { OrderConfirmation } from "@/components/restok/OrderConfirmation";
 import { ProductCard } from "@/components/restok/ProductCard";
 import { Wordmark } from "@/components/restok/Wordmark";
