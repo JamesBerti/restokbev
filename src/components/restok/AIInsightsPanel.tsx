@@ -48,11 +48,14 @@ export function AIInsightsPanel({
     fetchInsights({ data: { mode, category, cart: cartArr } })
       .then((res) => {
         if (cancelled) return;
-        if (res.error) setError(res.error);
-        setItems(res.insights);
+        if (res.error || !res.insights?.length) {
+          setItems(FALLBACK[mode]);
+        } else {
+          setItems(res.insights);
+        }
       })
-      .catch((err) => {
-        if (!cancelled) setError(err instanceof Error ? err.message : "Failed to load insights.");
+      .catch(() => {
+        if (!cancelled) setItems(FALLBACK[mode]);
       })
       .finally(() => {
         if (!cancelled) setLoading(false);
@@ -61,7 +64,6 @@ export function AIInsightsPanel({
     return () => {
       cancelled = true;
     };
-    // products is a large array; key on length + cart contents + filters
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mode, category, JSON.stringify(cart)]);
 
