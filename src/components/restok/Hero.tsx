@@ -72,7 +72,7 @@ export function Hero() {
 
             {/* Subline */}
             <p
-              className="mt-2"
+              className="mt-3"
               style={{
                 color: "rgba(255,255,255,0.55)",
                 fontSize: 11,
