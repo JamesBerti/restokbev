@@ -53,7 +53,7 @@ export function Hero() {
 
             {/* Headline */}
             <h1
-              className="mt-2.5"
+              className="mt-4"
               style={{
                 fontFamily: "'Plus Jakarta Sans', sans-serif",
                 fontWeight: 800,
