@@ -53,7 +53,7 @@ export function Hero() {
 
             {/* Headline */}
             <h1
-              className="mt-2.5"
+              className="mt-4"
               style={{
                 fontFamily: "'Plus Jakarta Sans', sans-serif",
                 fontWeight: 800,
@@ -72,7 +72,7 @@ export function Hero() {
 
             {/* Subline */}
             <p
-              className="mt-2"
+              className="mt-3"
               style={{
                 color: "rgba(255,255,255,0.55)",
                 fontSize: 11,
@@ -85,7 +85,7 @@ export function Hero() {
             </p>
 
             {/* Stat pills */}
-            <div className="mt-2.5 flex flex-wrap gap-2">
+            <div className="mt-4 flex flex-wrap gap-2">
               {["$10K+ saved per venue per year", "700+ BC retailers"].map((t) => (
                 <span
                   key={t}
