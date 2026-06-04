@@ -202,9 +202,14 @@ function Marketplace() {
 
       <Hero />
 
+      <HowItWorks />
+
       <AIAlertBanner />
 
-      <MarketTrends />
+      <div className="mx-auto grid max-w-[1200px] grid-cols-1 gap-3 px-4 py-3 md:grid-cols-[1.5fr_1fr]">
+        <MarketTrends />
+        <LiveActivity />
+      </div>
 
       <main className="mx-auto max-w-[1200px] px-5 py-5">
 
