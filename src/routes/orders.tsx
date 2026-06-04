@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate, redirect } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
 import { ORDER_STATUS_FLOW, formatStatus, statusToneClass, type OrderStatus } from "@/lib/order-status";
@@ -7,10 +7,13 @@ import { ORDER_STATUS_FLOW, formatStatus, statusToneClass, type OrderStatus } fr
 export const Route = createFileRoute("/orders")({
   head: () => ({
     meta: [
-      { title: "Your Orders · ReStok" },
-      { name: "description", content: "Track your wholesale orders, delivery status, and history on ReStok." },
+      { title: "Live Order · ReStok" },
+      { name: "description", content: "Track your wholesale order live with ETA and driver location." },
     ],
   }),
+  beforeLoad: () => {
+    throw redirect({ to: "/orders/track/$id", params: { id: "demo" } });
+  },
   component: OrderHistoryPage,
 });
 
