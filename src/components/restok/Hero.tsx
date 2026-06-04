@@ -85,7 +85,7 @@ export function Hero() {
             </p>
 
             {/* Stat pills */}
-            <div className="mt-2.5 flex flex-wrap gap-2">
+            <div className="mt-4 flex flex-wrap gap-2">
               {["$10K+ saved per venue per year", "700+ BC retailers"].map((t) => (
                 <span
                   key={t}
