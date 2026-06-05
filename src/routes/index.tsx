@@ -174,12 +174,15 @@ function Marketplace() {
             {user && <Link to="/orders" className="text-white/70 hover:text-white">My orders</Link>}
             {isRetailer && <Link to="/retailer" className="text-white/70 hover:text-white">Retailer</Link>}
             {isAdmin && <Link to="/admin" className="text-white/70 hover:text-white">Admin</Link>}
-            {user ? (
-              <button onClick={signOut} className="text-white/70 hover:text-white">Sign out</button>
-            ) : (
-              <Link to="/login" className="text-white/70 hover:text-white">Sign in</Link>
-            )}
           </nav>
+
+          <button onClick={() => setCartOpen(true)}
+            className={`flex shrink-0 items-center gap-1.5 rounded-xl border px-4 py-2 text-[13px] font-bold transition ${cartCount > 0 ? "border-white bg-white text-[#0f1e3d]" : "border-white/20 bg-white/5 text-white hover:border-white/40"}`}>
+            🛒
+            {cartCount > 0 ? (
+              <span>{cartCount} item{cartCount > 1 ? "s" : ""} · <strong>${cartSubtotal.toFixed(2)}</strong></span>
+            ) : <span>Cart</span>}
+          </button>
 
           <button
             onClick={() => setReferralOpen(true)}
@@ -193,13 +196,14 @@ function Marketplace() {
             />
           </button>
 
-          <button onClick={() => setCartOpen(true)}
-            className={`flex shrink-0 items-center gap-1.5 rounded-xl border px-4 py-2 text-[13px] font-bold transition ${cartCount > 0 ? "border-white bg-white text-[#0f1e3d]" : "border-white/20 bg-white/5 text-white hover:border-white/40"}`}>
-            🛒
-            {cartCount > 0 ? (
-              <span>{cartCount} item{cartCount > 1 ? "s" : ""} · <strong>${cartSubtotal.toFixed(2)}</strong></span>
-            ) : <span>Cart</span>}
-          </button>
+          <nav className="hidden items-center gap-3 text-xs font-semibold md:flex">
+            {user ? (
+              <button onClick={signOut} className="text-white/70 hover:text-white">Sign out</button>
+            ) : (
+              <Link to="/login" className="text-white/70 hover:text-white">Sign in</Link>
+            )}
+          </nav>
+
         </div>
       </header>
 
