@@ -11,8 +11,10 @@ export const Route = createFileRoute("/orders")({
       { name: "description", content: "Track your wholesale order live with ETA and driver location." },
     ],
   }),
-  beforeLoad: () => {
-    throw redirect({ to: "/orders/track/$id", params: { id: "demo" } });
+  beforeLoad: ({ location }) => {
+    if (location.pathname === "/orders" || location.pathname === "/orders/") {
+      throw redirect({ to: "/orders/track/$id", params: { id: "demo" } });
+    }
   },
   component: OrderHistoryPage,
 });
