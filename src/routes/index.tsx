@@ -59,21 +59,24 @@ function Marketplace() {
     const load = async () => {
       const [{ data: rs }, { data: ps }] = await Promise.all([
         supabase.from("retailers").select("id, name, neighborhood, delivery_minutes").order("name"),
-        supabase.from("products").select("*").order("name"),
+        supabase
+          .from("products")
+          .select("id, retailer_id, name, category, price, stock, rating, reviews, img, badge, description, ai_trend, ai_note")
+          .order("name"),
       ]);
       const retailerList = (rs ?? []) as Retailer[];
       setRetailers(retailerList);
       const byId = new Map(retailerList.map((r) => [r.id, r]));
-      setProducts(((ps ?? []) as DbProduct[]).map((p): Product => {
+      setProducts((ps ?? []).map((p): Product => {
         const r = byId.get(p.retailer_id);
         return {
           id: p.id, name: p.name, category: p.category,
           retailer: r?.name ?? "—", retailer_id: p.retailer_id,
-          price: Number(p.price), ldbFloor: Number(p.ldb_floor),
+          price: Number(p.price), ldbFloor: 0,
           stock: p.stock, delivery: `${r?.delivery_minutes ?? 60} min`,
           rating: Number(p.rating), reviews: p.reviews, img: p.img,
           badge: p.badge, description: p.description,
-          aiTrend: p.ai_trend, aiNote: p.ai_note,
+          aiTrend: (p.ai_trend as "up" | "down" | "flat"), aiNote: p.ai_note,
         };
       }));
     };

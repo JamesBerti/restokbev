@@ -118,19 +118,13 @@ function LiveTrackPage() {
       if (r?.name) setRetailerName(r.name);
 
       if (lines.length) {
-        const ids = lines.map((l) => l.product_id);
-        const { data: prods } = await supabase
-          .from("products")
-          .select("id,ldb_floor,price")
-          .in("id", ids);
-        const byId = new Map((prods ?? []).map((p: { id: string; ldb_floor: number; price: number }) => [p.id, p]));
-        const total = lines.reduce((s, l) => {
-          const p = byId.get(l.product_id);
-          if (!p) return s;
-          const diff = Math.max(0, Number(p.ldb_floor) - Number(l.unit_price));
-          return s + diff * l.qty;
-        }, 0);
-        setSavings(+total.toFixed(2));
+        try {
+          const { getOrderSavings } = await import("@/lib/products.functions");
+          const { savings: s } = await getOrderSavings({ data: { order_id: id } });
+          setSavings(s);
+        } catch {
+          setSavings(0);
+        }
       }
     };
     void load();

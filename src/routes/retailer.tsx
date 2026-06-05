@@ -133,12 +133,18 @@ function CatalogPanel({ retailerId }: { retailerId: string }) {
   const [msg, setMsg] = useState("");
 
   useEffect(() => {
-    const load = () =>
-      supabase.from("products").select("*").eq("retailer_id", retailerId).order("name")
-        .then(({ data }) => setProducts((data ?? []) as DbProduct[]));
-    load();
+    const load = async () => {
+      const { getRetailerProducts } = await import("@/lib/products.functions");
+      try {
+        const { products: rows } = await getRetailerProducts({ data: { retailer_id: retailerId } });
+        setProducts(rows as DbProduct[]);
+      } catch (e) {
+        setMsg(e instanceof Error ? e.message : "Failed to load products.");
+      }
+    };
+    void load();
     const ch = supabase.channel(`retailer-${retailerId}`)
-      .on("postgres_changes", { event: "*", schema: "public", table: "products", filter: `retailer_id=eq.${retailerId}` }, load)
+      .on("postgres_changes", { event: "*", schema: "public", table: "products", filter: `retailer_id=eq.${retailerId}` }, () => { void load(); })
       .subscribe();
     return () => { supabase.removeChannel(ch); };
   }, [retailerId]);
