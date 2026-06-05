@@ -85,9 +85,6 @@ export function ProductCard({ product: p, qty, onAdd, onRemove }: Props) {
             <div className="text-[17px] font-extrabold text-foreground">
               ${p.price.toFixed(2)}
             </div>
-            <div className="text-[9px] text-muted-foreground">
-              LDB floor: ${p.ldbFloor.toFixed(2)}
-            </div>
           </div>
           {qty === 0 ? (
             <button
