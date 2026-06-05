@@ -240,15 +240,15 @@ function LiveTrackPage() {
   return (
     <div className="min-h-screen bg-white pb-20">
       {/* Nav bar — same as all screens */}
-      <header className="bg-nav-navy sticky top-0 z-10">
+      <header className="bg-nav-navy sticky top-0 z-10 shadow-soft">
         <div className="mx-auto flex h-14 max-w-[720px] items-center justify-between px-5">
-          <Link to="/orders" className="text-[11px] font-semibold text-white/70 hover:text-white">
-            ← Orders
-          </Link>
           <Wordmark />
-          <div className="w-12" />
+          <Link to="/orders" className="text-[11px] font-semibold text-white/70 hover:text-white">
+            Orders →
+          </Link>
         </div>
       </header>
+
 
       <main className="mx-auto max-w-[720px]">
         {/* Order header */}
