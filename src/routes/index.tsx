@@ -61,7 +61,7 @@ function Marketplace() {
         supabase.from("retailers").select("id, name, neighborhood, delivery_minutes").order("name"),
         supabase
           .from("products")
-          .select("id, retailer_id, name, category, price, stock, rating, reviews, img, badge, description, ai_trend, ai_note")
+          .select("id, retailer_id, name, category, price, ldb_floor, stock, rating, reviews, img, badge, description, ai_trend, ai_note")
           .order("name"),
       ]);
       const retailerList = (rs ?? []) as Retailer[];
@@ -72,7 +72,8 @@ function Marketplace() {
         return {
           id: p.id, name: p.name, category: p.category,
           retailer: r?.name ?? "—", retailer_id: p.retailer_id,
-          price: Number(p.price), ldbFloor: 0,
+          price: Number(p.price), ldbFloor: Number(p.ldb_floor ?? 0),
+
           stock: p.stock, delivery: `${r?.delivery_minutes ?? 60} min`,
           rating: Number(p.rating), reviews: p.reviews, img: p.img,
           badge: p.badge, description: p.description,
