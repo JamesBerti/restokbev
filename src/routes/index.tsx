@@ -76,7 +76,7 @@ function Marketplace() {
           stock: p.stock, delivery: `${r?.delivery_minutes ?? 60} min`,
           rating: Number(p.rating), reviews: p.reviews, img: p.img,
           badge: p.badge, description: p.description,
-          aiTrend: p.ai_trend, aiNote: p.ai_note,
+          aiTrend: (p.ai_trend as "up" | "down" | "flat"), aiNote: p.ai_note,
         };
       }));
     };
