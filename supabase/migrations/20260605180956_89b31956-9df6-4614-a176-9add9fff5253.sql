@@ -1,0 +1,1 @@
+GRANT SELECT (ldb_floor) ON public.products TO anon, authenticated;
