@@ -272,7 +272,7 @@ function Marketplace() {
 
         <footer className="mt-10 rounded-xl border border-border bg-surface px-5 py-3.5 shadow-soft">
           <p className="text-[10px] leading-relaxed text-muted-foreground">
-            <strong className="text-foreground">ReStok BC Wholesale Platform</strong> — Licensed retailers only. All transactions comply with LCRB regulations and LDB wholesale floor pricing. Delivery fulfilled by LCRB-licensed carriers. Recipient must present licensee ID on delivery. Platform fee of 3.5% charged to retailer on each settled order. Questions? support@restok.ca · <Link to="/faq" className="font-semibold text-muted-foreground underline hover:text-foreground">Questions? Visit our FAQ</Link>
+            <strong className="text-foreground">ReStok BC Wholesale Platform</strong> — Licensed retailers only. All transactions comply with LCRB regulations and LDB wholesale floor pricing. Delivery fulfilled by LCRB-licensed carriers. Recipient must present licensee ID on delivery. Platform fee of 3.5% charged to retailer on each settled order. Questions? support@restok.ca · <Link to="/about" className="font-semibold text-muted-foreground underline hover:text-foreground">About</Link> · <Link to="/faq" className="font-semibold text-muted-foreground underline hover:text-foreground">Questions? Visit our FAQ</Link>
           </p>
         </footer>
       </main>
