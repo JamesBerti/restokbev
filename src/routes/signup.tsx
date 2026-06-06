@@ -139,6 +139,7 @@ function SignupPage() {
           Already have one? <Link to="/login" className="font-bold text-primary">Sign in</Link>
         </div>
       </form>
+      </div>
     </div>
   );
 }
