@@ -1,6 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { SignupProcessFlow } from "@/components/restok/SignupProcessFlow";
 import { useAuth } from "@/hooks/use-auth";
 
 export const Route = createFileRoute("/signup")({
