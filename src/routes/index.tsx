@@ -177,6 +177,14 @@ function Marketplace() {
             {isAdmin && <Link to="/admin" className="text-white/70 hover:text-white">Admin</Link>}
           </nav>
 
+          <nav className="hidden items-center gap-3 text-xs font-semibold md:flex">
+            {user ? (
+              <button onClick={signOut} className="text-white/70 hover:text-white">Sign out</button>
+            ) : (
+              <Link to="/login" className="text-white/70 hover:text-white">Sign in</Link>
+            )}
+          </nav>
+
           <button onClick={() => setCartOpen(true)}
             className={`flex shrink-0 items-center gap-1.5 rounded-xl border px-4 py-2 text-[13px] font-bold transition ${cartCount > 0 ? "border-white bg-white text-[#0f1e3d]" : "border-white/20 bg-white/5 text-white hover:border-white/40"}`}>
             🛒
@@ -196,14 +204,6 @@ function Marketplace() {
               style={{ background: "#f59e0b", boxShadow: "0 0 0 2px #0f1e3d" }}
             />
           </button>
-
-          <nav className="hidden items-center gap-3 text-xs font-semibold md:flex">
-            {user ? (
-              <button onClick={signOut} className="text-white/70 hover:text-white">Sign out</button>
-            ) : (
-              <Link to="/login" className="text-white/70 hover:text-white">Sign in</Link>
-            )}
-          </nav>
 
         </div>
       </header>
@@ -268,7 +268,7 @@ function Marketplace() {
 
         <footer className="mt-10 rounded-xl border border-border bg-surface px-5 py-3.5 shadow-soft">
           <p className="text-[10px] leading-relaxed text-muted-foreground">
-            <strong className="text-foreground">ReStok BC Wholesale Platform</strong> — Licensed retailers only. All transactions comply with LCRB regulations and LDB wholesale floor pricing. Delivery fulfilled by LCRB-licensed carriers. Recipient must present licensee ID on delivery. Platform fee of 3.5% charged to retailer on each settled order. Questions? support@restok.ca
+            <strong className="text-foreground">ReStok BC Wholesale Platform</strong> — Licensed retailers only. All transactions comply with LCRB regulations and LDB wholesale floor pricing. Delivery fulfilled by LCRB-licensed carriers. Recipient must present licensee ID on delivery. Platform fee of 3.5% charged to retailer on each settled order. Questions? support@restok.ca · <Link to="/faq" className="font-semibold text-muted-foreground underline hover:text-foreground">Questions? Visit our FAQ</Link>
           </p>
         </footer>
       </main>

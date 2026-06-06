@@ -1,6 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { SignupProcessFlow } from "@/components/restok/SignupProcessFlow";
 import { useAuth } from "@/hooks/use-auth";
 
 export const Route = createFileRoute("/signup")({
@@ -67,7 +68,9 @@ function SignupPage() {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-5 py-10">
-      <form onSubmit={submit} className="w-full max-w-md rounded-2xl border border-border bg-surface p-7 shadow-soft">
+      <div className="w-full max-w-md">
+        <SignupProcessFlow kind={accountType} />
+      <form onSubmit={submit} className="w-full rounded-2xl border border-border bg-surface p-7 shadow-soft">
         <div className="mb-1 text-2xl font-black text-foreground">Create your account</div>
         <div className="mb-5 text-sm text-muted-foreground">Join ReStok as a licensee or retailer</div>
 
@@ -136,6 +139,7 @@ function SignupPage() {
           Already have one? <Link to="/login" className="font-bold text-primary">Sign in</Link>
         </div>
       </form>
+      </div>
     </div>
   );
 }
