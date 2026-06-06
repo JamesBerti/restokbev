@@ -177,13 +177,11 @@ function Marketplace() {
             {isAdmin && <Link to="/admin" className="text-white/70 hover:text-white">Admin</Link>}
           </nav>
 
-          <nav className="hidden items-center gap-3 text-xs font-semibold md:flex">
-            {user ? (
-              <button onClick={signOut} className="text-white/70 hover:text-white">Sign out</button>
-            ) : (
+          {!user && (
+            <nav className="hidden items-center gap-3 text-xs font-semibold md:flex">
               <Link to="/login" className="text-white/70 hover:text-white">Sign in</Link>
-            )}
-          </nav>
+            </nav>
+          )}
 
           <button onClick={() => setCartOpen(true)}
             className={`flex shrink-0 items-center gap-1.5 rounded-xl border px-4 py-2 text-[13px] font-bold transition ${cartCount > 0 ? "border-white bg-white text-[#0f1e3d]" : "border-white/20 bg-white/5 text-white hover:border-white/40"}`}>
@@ -204,6 +202,12 @@ function Marketplace() {
               style={{ background: "#f59e0b", boxShadow: "0 0 0 2px #0f1e3d" }}
             />
           </button>
+
+          {user && (
+            <nav className="hidden items-center gap-3 text-xs font-semibold md:flex">
+              <button onClick={signOut} className="text-white/70 hover:text-white">Sign out</button>
+            </nav>
+          )}
 
         </div>
       </header>
