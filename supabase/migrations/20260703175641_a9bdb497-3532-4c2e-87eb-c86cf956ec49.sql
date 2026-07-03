@@ -1,0 +1,1 @@
+REVOKE EXECUTE ON FUNCTION public.enforce_retailer_order_update() FROM PUBLIC, anon, authenticated;
