@@ -182,8 +182,6 @@ function Marketplace() {
 
           {!user && (
             <nav className="hidden items-center gap-3 text-xs font-semibold md:flex">
-              <Link to="/about" className="text-white/70 hover:text-white">About</Link>
-              <Link to="/faq" className="text-white/70 hover:text-white">FAQ</Link>
               <Link to="/login" className="text-white/70 hover:text-white">Sign in</Link>
             </nav>
           )}
