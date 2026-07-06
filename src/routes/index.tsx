@@ -5,6 +5,7 @@ import { Gift } from "lucide-react";
 import { AIAlertBanner } from "@/components/restok/AIAlertBanner";
 import { Hero } from "@/components/restok/Hero";
 import { HowItWorks } from "@/components/restok/HowItWorks";
+import { RegulatorySection } from "@/components/restok/RegulatorySection";
 import { MarketTrends } from "@/components/restok/MarketTrends";
 import { LiveActivity } from "@/components/restok/LiveActivity";
 import { CartDrawer } from "@/components/restok/CartDrawer";
@@ -27,7 +28,7 @@ import {
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "ReStok — BC Wholesale Alcohol Ordering for Licensees" },
+      { title: "ReStok — Wholesale Beverage Procurement for BC Licensees" },
       { name: "description", content: "Order wholesale wine, beer & spirits from Vancouver's top retailers. LDB floor pricing, LCRB-licensed delivery, same-day to your venue." },
     ],
   }),
@@ -172,6 +173,8 @@ function Marketplace() {
           </div>
 
           <nav className="hidden items-center gap-3 text-xs font-semibold md:flex">
+            <Link to="/about" className="text-white/70 hover:text-white">About</Link>
+            <Link to="/faq" className="text-white/70 hover:text-white">FAQ</Link>
             {user && <Link to="/orders" className="text-white/70 hover:text-white">My orders</Link>}
             {isRetailer && <Link to="/retailer" className="text-white/70 hover:text-white">Retailer</Link>}
             {isAdmin && <Link to="/admin" className="text-white/70 hover:text-white">Admin</Link>}
@@ -179,6 +182,8 @@ function Marketplace() {
 
           {!user && (
             <nav className="hidden items-center gap-3 text-xs font-semibold md:flex">
+              <Link to="/about" className="text-white/70 hover:text-white">About</Link>
+              <Link to="/faq" className="text-white/70 hover:text-white">FAQ</Link>
               <Link to="/login" className="text-white/70 hover:text-white">Sign in</Link>
             </nav>
           )}
@@ -213,6 +218,8 @@ function Marketplace() {
       </header>
 
       <Hero />
+
+      <RegulatorySection />
 
       <HowItWorks />
 
@@ -272,7 +279,7 @@ function Marketplace() {
 
         <footer className="mt-10 rounded-xl border border-border bg-surface px-5 py-3.5 shadow-soft">
           <p className="text-[10px] leading-relaxed text-muted-foreground">
-            <strong className="text-foreground">ReStok BC Wholesale Platform</strong> — Licensed retailers only. All transactions comply with LCRB regulations and LDB wholesale floor pricing. Delivery fulfilled by LCRB-licensed carriers. Recipient must present licensee ID on delivery. Platform fee of 3.5% charged to retailer on each settled order. Questions? support@restok.ca · <Link to="/about" className="font-semibold text-muted-foreground underline hover:text-foreground">About</Link> · <Link to="/faq" className="font-semibold text-muted-foreground underline hover:text-foreground">Questions? Visit our FAQ</Link>
+            <strong className="text-foreground">ReStok BC Wholesale Platform</strong> — Licensed retailers only. All transactions comply with LCRB regulations and LDB wholesale floor pricing. Delivery fulfilled by LCRB-licensed carriers. Recipient must present licensee ID on delivery. Platform fee of 3.5%-5% platform fee charged to retailer depending on tier. Questions? support@restokbev.ca · <Link to="/about" className="font-semibold text-muted-foreground underline hover:text-foreground">About</Link> · <Link to="/faq" className="font-semibold text-muted-foreground underline hover:text-foreground">Questions? Visit our FAQ</Link>
           </p>
         </footer>
       </main>
