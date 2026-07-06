@@ -77,7 +77,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
+      { title: "ReStok — Wholesale Beverage Procurement for BC Licensees" },
       { name: "description", content: "ReStok is a wholesale alcohol ordering platform for BC restaurant and bar licensees." },
       { name: "author", content: "Lovable" },
       { property: "og:title", content: "ReStok — BC Wholesale Beverage Platform" },

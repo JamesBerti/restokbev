@@ -1,3 +1,5 @@
+import heroPhone from "@/assets/restok-hero-phone.png.asset.json";
+
 export function Hero() {
   return (
     <>
@@ -5,7 +7,7 @@ export function Hero() {
         className="relative w-full overflow-hidden"
         style={{
           background: "#0f1e3d",
-          padding: "18px 20px 14px",
+          padding: "24px 20px 24px",
         }}
       >
         {/* Subtle blue gradient overlay matching nav */}
@@ -19,11 +21,11 @@ export function Hero() {
         />
 
         <div
-          className="relative mx-auto flex max-w-[1200px] items-stretch gap-6"
+          className="relative mx-auto flex max-w-[1200px] items-center gap-8"
           style={{ zIndex: 1 }}
         >
-          {/* Left column ~65% */}
-          <div className="flex flex-col" style={{ flex: "0 0 65%" }}>
+          {/* Left column */}
+          <div className="flex flex-1 flex-col">
             {/* Pill badge */}
             <div
               className="inline-flex w-fit items-center gap-1.5 rounded-full"
@@ -47,7 +49,7 @@ export function Hero() {
                   fontWeight: 600,
                 }}
               >
-                Built on BC's 2026 Licensee-to-Licensee Regulatory Change
+                The rules just changed. We built for it.
               </span>
             </div>
 
@@ -57,96 +59,102 @@ export function Hero() {
               style={{
                 fontFamily: "'Plus Jakarta Sans', sans-serif",
                 fontWeight: 800,
-                fontSize: 20,
+                fontSize: 22,
                 lineHeight: 1.2,
                 color: "#ffffff",
                 margin: 0,
               }}
             >
-              Wholesale beverage.
-              <br />
+              Wholesale beverage.{" "}
               <span style={{ color: "#22c55e", fontStyle: "italic" }}>
                 Reimagined.
               </span>
             </h1>
 
+            {/* Bold tagline */}
+            <div
+              className="mt-2"
+              style={{
+                fontFamily: "'Plus Jakarta Sans', sans-serif",
+                fontWeight: 700,
+                fontSize: 14,
+                color: "#ffffff",
+                lineHeight: 1.3,
+              }}
+            >
+              Built for the industry, by the industry.
+            </div>
+
             {/* Subline */}
             <p
               className="mt-3"
               style={{
-                color: "rgba(255,255,255,0.55)",
-                fontSize: 11,
+                color: "rgba(255,255,255,0.6)",
+                fontSize: 12,
                 lineHeight: 1.6,
                 margin: 0,
+                maxWidth: 520,
               }}
             >
               Browse live inventory from BC private retailers, approve in one tap,
-              and get delivery to your back door. Built for LCRB-licensed venues.
+              and get delivery to your back door.
             </p>
 
-            {/* Stat pills */}
-            <div className="mt-4 flex flex-wrap gap-2">
+            {/* Value props */}
+            <ul className="mt-5 flex flex-col gap-2">
               {[
-                "$19,752+ in annual value per venue",
-                "Live in BC since May 2026",
-              ].map((t) => (
-                <span
-                  key={t}
+                {
+                  title: "Never run dry",
+                  body: "AI par alerts before you're out",
+                },
+                {
+                  title: "One tap, best price",
+                  body: "every BC retailer, one order",
+                },
+                {
+                  title: "New revenue channel",
+                  body: "for retailers, zero cost to list",
+                },
+              ].map((item) => (
+                <li
+                  key={item.title}
+                  className="flex items-start gap-2.5"
                   style={{
-                    background: "rgba(255,255,255,0.08)",
-                    border: "1px solid rgba(255,255,255,0.12)",
-                    borderRadius: 100,
-                    padding: "4px 10px",
-                    fontSize: 9,
-                    color: "rgba(255,255,255,0.6)",
-                    fontWeight: 500,
+                    fontSize: 11,
+                    color: "rgba(255,255,255,0.75)",
+                    lineHeight: 1.4,
                   }}
                 >
-                  {t}
-                </span>
+                  <span
+                    className="mt-[3px] inline-block h-[6px] w-[6px] shrink-0 rounded-full"
+                    style={{ background: "#22c55e" }}
+                  />
+                  <span>
+                    <strong style={{ color: "#ffffff", fontWeight: 700 }}>
+                      {item.title}
+                    </strong>
+                    <span style={{ color: "rgba(255,255,255,0.6)" }}>
+                      {" — "}
+                      {item.body}
+                    </span>
+                  </span>
+                </li>
               ))}
-            </div>
+            </ul>
           </div>
 
-          {/* Right column ~35% */}
-          <div className="flex flex-col justify-center" style={{ flex: "0 0 35%" }}>
-            {[
-              { num: "Same-day", label: "delivery" },
-              { num: "$0", label: "Markup" },
-              { num: "Free", label: "To join" },
-            ].map((b, i) => (
-              <div
-                key={b.label}
-                style={{
-                  borderTop:
-                    i === 0 ? "none" : "1px solid rgba(255,255,255,0.08)",
-                  padding: "6px 0",
-                }}
-              >
-                <div
-                  style={{
-                    fontFamily: "'Fraunces', serif",
-                    fontWeight: 300,
-                    fontSize: 22,
-                    color: "#ffffff",
-                    lineHeight: 1.1,
-                  }}
-                >
-                  {b.num}
-                </div>
-                <div
-                  style={{
-                    fontSize: 8,
-                    color: "rgba(255,255,255,0.4)",
-                    textTransform: "uppercase",
-                    letterSpacing: "1px",
-                    marginTop: 2,
-                  }}
-                >
-                  {b.label}
-                </div>
-              </div>
-            ))}
+          {/* Right column — phone image */}
+          <div className="hidden shrink-0 items-center justify-center md:flex">
+            <img
+              src={heroPhone.url}
+              alt="ReStok live delivery tracking on mobile"
+              style={{
+                width: 240,
+                height: "auto",
+                display: "block",
+                filter: "drop-shadow(0 20px 40px rgba(0,0,0,0.4))",
+              }}
+            />
           </div>
         </div>
       </section>
