@@ -47,7 +47,7 @@ export function Hero() {
                   fontWeight: 600,
                 }}
               >
-                BC's First Wholesale Beverage Marketplace
+                Built on BC's 2026 Licensee-to-Licensee Regulatory Change
               </span>
             </div>
 
@@ -80,13 +80,16 @@ export function Hero() {
                 margin: 0,
               }}
             >
-              Browse live inventory from BC's best retailers, approve in one tap,
-              and watch your order arrive at your back door in under 90 minutes.
+              Browse live inventory from BC private retailers, approve in one tap,
+              and get delivery to your back door. Built for LCRB-licensed venues.
             </p>
 
             {/* Stat pills */}
             <div className="mt-4 flex flex-wrap gap-2">
-              {["$10K+ saved per venue per year", "700+ BC retailers"].map((t) => (
+              {[
+                "$19,752+ in annual value per venue",
+                "Live in BC since May 2026",
+              ].map((t) => (
                 <span
                   key={t}
                   style={{
@@ -108,7 +111,7 @@ export function Hero() {
           {/* Right column ~35% */}
           <div className="flex flex-col justify-center" style={{ flex: "0 0 35%" }}>
             {[
-              { num: "90 min", label: "Average delivery" },
+              { num: "Same-day", label: "delivery" },
               { num: "$0", label: "Markup" },
               { num: "Free", label: "To join" },
             ].map((b, i) => (
