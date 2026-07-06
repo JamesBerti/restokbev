@@ -5,7 +5,7 @@ const STEPS = [
     icon: LayoutGrid,
     bg: "#1a56db",
     label: "Browse",
-    sub: "Live inventory from 700+ BC retailers",
+    sub: "Live inventory from BC private retailers",
   },
   {
     icon: CheckCheck,
@@ -17,7 +17,7 @@ const STEPS = [
     icon: Truck,
     bg: "#0f1e3d",
     label: "Delivered",
-    sub: "To your back door in under 90 minutes",
+    sub: "Same-day to your back door",
   },
 ];
 
