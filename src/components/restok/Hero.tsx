@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import heroPhone from "@/assets/restok-hero-phone.png.asset.json";
 
 export function Hero() {
@@ -25,7 +26,7 @@ export function Hero() {
           style={{ zIndex: 1 }}
         >
           {/* Left column */}
-          <div className="flex flex-1 flex-col">
+          <div className="flex flex-1 flex-col justify-center self-stretch">
             {/* Pill badge */}
             <div
               className="inline-flex w-fit items-center gap-1.5 rounded-full"
@@ -141,6 +142,31 @@ export function Hero() {
                 </li>
               ))}
             </ul>
+
+            {/* CTA buttons */}
+            <div className="mt-5 flex flex-wrap gap-3">
+              <Link
+                to="/signup"
+                className="inline-flex items-center justify-center rounded-xl px-4 py-2.5 text-[13px] font-bold transition"
+                style={{
+                  background: "#22c55e",
+                  color: "#0f1e3d",
+                  boxShadow: "0 4px 14px rgba(34,197,94,0.25)",
+                }}
+              >
+                Join as a founding venue
+              </Link>
+              <Link
+                to="/signup"
+                className="inline-flex items-center justify-center rounded-xl border px-4 py-2.5 text-[13px] font-bold transition hover:bg-white/10"
+                style={{
+                  borderColor: "rgba(255,255,255,0.3)",
+                  color: "#ffffff",
+                }}
+              >
+                Apply as a retailer
+              </Link>
+            </div>
           </div>
 
           {/* Right column — phone image */}
@@ -149,7 +175,7 @@ export function Hero() {
               src={heroPhone.url}
               alt="ReStok live delivery tracking on mobile"
               style={{
-                width: 240,
+                width: 204,
                 height: "auto",
                 display: "block",
                 filter: "drop-shadow(0 20px 40px rgba(0,0,0,0.4))",
