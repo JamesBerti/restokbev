@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Phone, TrendingUp, AlertTriangle, Search, CheckCheck, MapPin, Store } from "lucide-react";
 import { Wordmark } from "@/components/restok/Wordmark";
+import founderPhoto from "@/assets/founder-james-berti.jpg.asset.json";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
