@@ -4,7 +4,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { Gift } from "lucide-react";
 import { Hero } from "@/components/restok/Hero";
 import { HowItWorks } from "@/components/restok/HowItWorks";
-import { RegulatorySection } from "@/components/restok/RegulatorySection";
+
 import { MarketTrends } from "@/components/restok/MarketTrends";
 import { LiveActivity } from "@/components/restok/LiveActivity";
 import { CartDrawer } from "@/components/restok/CartDrawer";
