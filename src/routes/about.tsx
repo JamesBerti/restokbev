@@ -217,9 +217,11 @@ function AboutPage() {
           <H2>Built from the inside.</H2>
           <div className="mt-10 rounded-2xl border border-border bg-surface p-8 shadow-soft md:p-10">
             <div className="flex flex-col items-start gap-6 md:flex-row md:items-center">
-              <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-full text-white" style={{ background: "#0f1e3d", fontFamily: '"Plus Jakarta Sans", sans-serif', fontWeight: 800, fontSize: "26px" }}>
-                JB
-              </div>
+            <img
+              src={founderPhoto.url}
+              alt="James Berti, Founder of ReStok"
+              className="h-20 w-20 shrink-0 rounded-full object-cover"
+            />
               <div>
                 <div className="text-[20px] font-bold text-foreground">James Berti</div>
                 <div className="mt-0.5 text-[11px] font-bold uppercase tracking-[0.15em]" style={{ color: "#1a56db" }}>Founder ReStok</div>
