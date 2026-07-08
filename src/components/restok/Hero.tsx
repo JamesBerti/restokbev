@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import heroPhone from "@/assets/restok-hero-phone.png.asset.json";
+import { PhoneMockup } from "./PhoneMockup";
 
 export function Hero() {
   return (
@@ -8,7 +8,7 @@ export function Hero() {
         className="relative w-full overflow-hidden"
         style={{
           background: "#0f1e3d",
-          padding: "24px 20px 24px",
+          padding: "36px 20px 36px",
         }}
       >
         {/* Subtle blue gradient overlay matching nav */}
@@ -22,7 +22,7 @@ export function Hero() {
         />
 
         <div
-          className="relative mx-auto flex max-w-[1200px] items-center gap-8"
+          className="relative mx-auto flex max-w-[1120px] flex-col items-center gap-8 md:flex-row md:gap-6"
           style={{ zIndex: 1 }}
         >
           {/* Left column */}
@@ -50,7 +50,7 @@ export function Hero() {
                   fontWeight: 600,
                 }}
               >
-                The rules just changed. We built for it.
+                Built for BC's 2026 licensee-to-licensee change
               </span>
             </div>
 
@@ -60,45 +60,48 @@ export function Hero() {
               style={{
                 fontFamily: "'Plus Jakarta Sans', sans-serif",
                 fontWeight: 800,
-                fontSize: 22,
-                lineHeight: 1.2,
+                fontSize: 34,
+                lineHeight: 1.1,
                 color: "#ffffff",
                 margin: 0,
+                letterSpacing: "-0.02em",
               }}
             >
-              Wholesale beverage.{" "}
+              Never{" "}
               <span style={{ color: "#22c55e", fontStyle: "italic" }}>
-                Reimagined.
+                Run Dry
               </span>
+              .
             </h1>
 
-            {/* Bold tagline */}
+            {/* Sub-headline */}
             <div
-              className="mt-2"
+              className="mt-3"
               style={{
                 fontFamily: "'Plus Jakarta Sans', sans-serif",
                 fontWeight: 700,
-                fontSize: 14,
+                fontSize: 15,
                 color: "#ffffff",
                 lineHeight: 1.3,
               }}
             >
-              Built for the industry, by the industry.
+              Predictive AI inventory ordering for BC licensees.
             </div>
 
-            {/* Subline */}
+            {/* Body copy */}
             <p
               className="mt-3"
               style={{
-                color: "rgba(255,255,255,0.6)",
-                fontSize: 12,
+                color: "rgba(255,255,255,0.65)",
+                fontSize: 13,
                 lineHeight: 1.6,
                 margin: 0,
-                maxWidth: 520,
+                maxWidth: 500,
               }}
             >
-              Browse live inventory from BC private retailers, approve in one tap,
-              and get delivery to your back door.
+              ReStok helps restaurants, bars, hotels, and clubs spot low
+              inventory, approve replenishment, and get wine, beer, and spirits
+              delivered to the back door the same day they order.
             </p>
 
             {/* Value props */}
@@ -113,21 +116,21 @@ export function Hero() {
                   body: "every BC retailer, one order",
                 },
                 {
-                  title: "New revenue channel",
-                  body: "for retailers, zero cost to list",
+                  title: "Same-day delivery",
+                  body: "to your back door, LCRB-compliant",
                 },
               ].map((item) => (
                 <li
                   key={item.title}
                   className="flex items-start gap-2.5"
                   style={{
-                    fontSize: 11,
+                    fontSize: 12,
                     color: "rgba(255,255,255,0.75)",
                     lineHeight: 1.4,
                   }}
                 >
                   <span
-                    className="mt-[3px] inline-block h-[6px] w-[6px] shrink-0 rounded-full"
+                    className="mt-[5px] inline-block h-[6px] w-[6px] shrink-0 rounded-full"
                     style={{ background: "#22c55e" }}
                   />
                   <span>
@@ -144,43 +147,34 @@ export function Hero() {
             </ul>
 
             {/* CTA buttons */}
-            <div className="mt-5 flex flex-wrap gap-3">
+            <div className="mt-6 flex flex-wrap gap-3">
               <Link
                 to="/signup"
-                className="inline-flex items-center justify-center rounded-xl px-4 py-2.5 text-[13px] font-bold transition"
+                className="inline-flex items-center justify-center rounded-xl px-5 py-3 text-[13px] font-bold transition hover:brightness-110"
                 style={{
                   background: "#22c55e",
                   color: "#0f1e3d",
                   boxShadow: "0 4px 14px rgba(34,197,94,0.25)",
                 }}
               >
-                Join as a founding venue
+                Join as a Founding Licensee
               </Link>
               <Link
                 to="/signup"
-                className="inline-flex items-center justify-center rounded-xl border px-4 py-2.5 text-[13px] font-bold transition hover:bg-white/10"
+                className="inline-flex items-center justify-center rounded-xl border px-5 py-3 text-[13px] font-bold transition hover:bg-white/10"
                 style={{
                   borderColor: "rgba(255,255,255,0.3)",
                   color: "#ffffff",
                 }}
               >
-                Apply as a retailer
+                Apply as a Retailer
               </Link>
             </div>
           </div>
 
-          {/* Right column — phone image */}
-          <div className="hidden shrink-0 items-center justify-center md:flex">
-            <img
-              src={heroPhone.url}
-              alt="ReStok live delivery tracking on mobile"
-              style={{
-                width: 204,
-                height: "auto",
-                display: "block",
-                filter: "drop-shadow(0 20px 40px rgba(0,0,0,0.4))",
-              }}
-            />
+          {/* Right column — animated phone */}
+          <div className="flex shrink-0 items-center justify-center">
+            <PhoneMockup width={180} />
           </div>
         </div>
       </section>
