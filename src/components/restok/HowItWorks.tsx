@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import { ChevronRight, LayoutGrid, CheckCheck, Truck } from "lucide-react";
 
 const STEPS = [
