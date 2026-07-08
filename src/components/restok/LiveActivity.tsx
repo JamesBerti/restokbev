@@ -161,29 +161,16 @@ export function LiveActivity() {
               letterSpacing: "1px",
             }}
           >
-            Live in BC
+            Product preview — live delivery tracking
           </span>
         </div>
-        <span
-          style={{
-            fontSize: 9,
-            color: "#22c55e",
-            background: "rgba(34,197,94,0.12)",
-            border: "1px solid rgba(34,197,94,0.3)",
-            borderRadius: 100,
-            padding: "2px 7px",
-            fontWeight: 700,
-          }}
-        >
-          12 active orders
-        </span>
       </div>
       <canvas ref={canvasRef} className="block w-full flex-1" style={{ minHeight: 90, borderRadius: 8 }} />
       <div
         className="mt-1.5"
         style={{ fontSize: 9, color: "rgba(255,255,255,0.5)" }}
       >
-        Showing live delivery activity across Metro Vancouver
+        A preview of the ReStok delivery experience.
       </div>
     </div>
   );

@@ -4,7 +4,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { Gift } from "lucide-react";
 import { Hero } from "@/components/restok/Hero";
 import { HowItWorks } from "@/components/restok/HowItWorks";
-import { RegulatorySection } from "@/components/restok/RegulatorySection";
+
 import { MarketTrends } from "@/components/restok/MarketTrends";
 import { LiveActivity } from "@/components/restok/LiveActivity";
 import { CartDrawer } from "@/components/restok/CartDrawer";
@@ -216,8 +216,6 @@ function Marketplace() {
 
       <Hero />
 
-      <RegulatorySection />
-
       <HowItWorks />
 
       <div className="mx-auto grid max-w-[1200px] grid-cols-1 gap-3 px-4 py-3 md:grid-cols-[1.5fr_1fr]">
@@ -274,7 +272,7 @@ function Marketplace() {
 
         <footer className="mt-10 rounded-xl border border-border bg-surface px-5 py-3.5 shadow-soft">
           <p className="text-[10px] leading-relaxed text-muted-foreground">
-            <strong className="text-foreground">ReStok BC Wholesale Platform</strong> — Licensed retailers only. All transactions comply with LCRB regulations and LDB wholesale floor pricing. Delivery fulfilled by LCRB-licensed carriers. Recipient must present licensee ID on delivery. Platform fee of 3.5%-5% platform fee charged to retailer depending on tier. Questions? support@restokbev.ca · <Link to="/about" className="font-semibold text-muted-foreground underline hover:text-foreground">About</Link> · <Link to="/faq" className="font-semibold text-muted-foreground underline hover:text-foreground">Questions? Visit our FAQ</Link>
+            <strong className="text-foreground">ReStok BC Wholesale Platform</strong> — Licensed retailers only. All transactions comply with LCRB regulations and LDB wholesale floor pricing. Delivery fulfilled by LCRB-licensed carriers. Recipient must present licensee ID on delivery. Platform fee: 3.5%–5%, depending on tier. Questions? support@restokbev.ca · <Link to="/about" className="font-semibold text-muted-foreground underline hover:text-foreground">About</Link> · <Link to="/faq" className="font-semibold text-muted-foreground underline hover:text-foreground">FAQ</Link>
           </p>
         </footer>
       </main>
