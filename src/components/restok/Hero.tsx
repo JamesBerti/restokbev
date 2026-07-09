@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { PhoneMockup } from "./PhoneMockup";
+import { HeroPhones } from "./HeroPhones";
 
 export function Hero() {
   return (
