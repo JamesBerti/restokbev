@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { AlertTriangle, CheckCircle2, Truck } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { AlertTriangle, CheckCircle2, Truck, MapPin } from "lucide-react";
 
 type ScreenState = {
   key: string;
@@ -41,6 +41,16 @@ const STATES: ScreenState[] = [
     header: "Same-Day Delivery",
     main: "Arriving at your back door today",
     supporting: "Live route tracking once your retailer confirms fulfillment.",
+    cta: "Track Route",
+  },
+  {
+    key: "tracking",
+    accent: "#22c55e",
+    accentSoft: "rgba(34,197,94,0.12)",
+    Icon: MapPin,
+    header: "Live Tracking",
+    main: "Driver 4 min away",
+    supporting: "En route to your back door with 6 cases.",
   },
 ];
 
