@@ -354,6 +354,12 @@ export function PhoneMockup({ width = 180 }: { width?: number }) {
               {s.supporting}
             </div>
 
+            {s.key === "tracking" && (
+              <div style={{ marginTop: 10 }}>
+                <PhoneDeliveryMap />
+              </div>
+            )}
+
             {s.cta && (
               <div
                 style={{
