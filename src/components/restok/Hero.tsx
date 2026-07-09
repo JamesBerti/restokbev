@@ -169,6 +169,25 @@ export function Hero() {
                 Apply as a Retailer
               </Link>
             </div>
+
+            {/* Regulatory footnote */}
+            <p
+              className="mt-4"
+              style={{
+                color: "rgba(255,255,255,0.5)",
+                fontSize: 11,
+                lineHeight: 1.5,
+                margin: 0,
+              }}
+            >
+              Built on BC's 2026 licensee-to-licensee regulation —{" "}
+              <Link
+                to="/about"
+                style={{ color: "#22c55e", textDecoration: "underline" }}
+              >
+                see how it works
+              </Link>
+            </p>
           </div>
 
           {/* Right column — animated phone */}
