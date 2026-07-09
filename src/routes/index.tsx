@@ -6,7 +6,6 @@ import { Hero } from "@/components/restok/Hero";
 import { HowItWorks } from "@/components/restok/HowItWorks";
 
 import { MarketTrends } from "@/components/restok/MarketTrends";
-import { LiveActivity } from "@/components/restok/LiveActivity";
 import { CartDrawer } from "@/components/restok/CartDrawer";
 import { ReferralDrawer } from "@/components/restok/ReferralDrawer";
 import { OrderConfirmation } from "@/components/restok/OrderConfirmation";
@@ -218,9 +217,8 @@ function Marketplace() {
 
       <HowItWorks />
 
-      <div className="mx-auto grid max-w-[1200px] grid-cols-1 gap-3 px-4 py-3 md:grid-cols-[1.5fr_1fr]">
+      <div className="mx-auto max-w-[1200px] px-4 py-3">
         <MarketTrends />
-        <LiveActivity />
       </div>
 
       <main className="mx-auto max-w-[1200px] px-5 py-5">
