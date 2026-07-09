@@ -160,39 +160,21 @@ export function Hero() {
               </Link>
               <Link
                 to="/signup"
-                className="inline-flex items-center justify-center rounded-xl border px-5 py-3 text-[13px] font-bold transition hover:bg-white/10"
+                className="inline-flex items-center justify-center rounded-xl border-2 px-5 py-3 text-[13px] font-bold transition hover:bg-white/10"
                 style={{
-                  borderColor: "rgba(255,255,255,0.3)",
+                  borderColor: "rgba(255,255,255,0.35)",
                   color: "#ffffff",
+                  background: "transparent",
                 }}
               >
                 Apply as a Retailer
               </Link>
             </div>
-
-            {/* Regulatory footnote */}
-            <p
-              className="mt-4"
-              style={{
-                color: "rgba(255,255,255,0.5)",
-                fontSize: 11,
-                lineHeight: 1.5,
-                margin: 0,
-              }}
-            >
-              Built on BC's 2026 licensee-to-licensee regulation —{" "}
-              <Link
-                to="/about"
-                style={{ color: "#22c55e", textDecoration: "underline" }}
-              >
-                see how it works
-              </Link>
-            </p>
           </div>
 
-          {/* Right column — animated phone */}
-          <div className="flex shrink-0 items-center justify-center">
-            <PhoneMockup width={180} />
+          {/* Right column — overlapping phones */}
+          <div className="flex w-full shrink-0 items-center justify-center md:w-[420px]">
+            <HeroPhones />
           </div>
         </div>
       </section>
