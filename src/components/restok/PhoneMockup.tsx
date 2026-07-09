@@ -54,6 +54,116 @@ const STATES: ScreenState[] = [
   },
 ];
 
+function PhoneDeliveryMap() {
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const dotsRef = useRef<{ t: number; speed: number; path: [number, number][] }[]>([]);
+
+  useEffect(() => {
+    dotsRef.current = Array.from({ length: 3 }, () => ({
+      path: Array.from({ length: 4 }, () => [0.1 + Math.random() * 0.8, 0.15 + Math.random() * 0.7]),
+      t: Math.random(),
+      speed: 0.25 + Math.random() * 0.35,
+    }));
+  }, []);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const dpr = window.devicePixelRatio || 1;
+    let raf = 0;
+    let last = performance.now();
+
+    const resize = () => {
+      const cssW = canvas.clientWidth;
+      const cssH = canvas.clientHeight;
+      canvas.width = cssW * dpr;
+      canvas.height = cssH * dpr;
+    };
+    resize();
+
+    const pointAlong = (path: [number, number][], t: number, w: number, h: number) => {
+      const lens: number[] = [];
+      let total = 0;
+      for (let i = 0; i < path.length - 1; i++) {
+        const dx = (path[i + 1][0] - path[i][0]) * w;
+        const dy = (path[i + 1][1] - path[i][1]) * h;
+        const d = Math.hypot(dx, dy);
+        lens.push(d);
+        total += d;
+      }
+      let target = t * total;
+      for (let i = 0; i < lens.length; i++) {
+        if (target <= lens[i]) {
+          const f = lens[i] === 0 ? 0 : target / lens[i];
+          return { x: (path[i][0] + (path[i + 1][0] - path[i][0]) * f) * w, y: (path[i][1] + (path[i + 1][1] - path[i][1]) * f) * h };
+        }
+        target -= lens[i];
+      }
+      return { x: path.at(-1)![0] * w, y: path.at(-1)![1] * h };
+    };
+
+    const draw = (now: number) => {
+      const dt = Math.min(0.1, (now - last) / 1000);
+      last = now;
+      const cssW = canvas.clientWidth;
+      const cssH = canvas.clientHeight;
+      const ctx = canvas.getContext("2d")!;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      ctx.fillStyle = "#eef2f7";
+      ctx.fillRect(0, 0, cssW, cssH);
+
+      ctx.strokeStyle = "rgba(15,30,61,0.08)";
+      ctx.lineWidth = 0.5;
+      for (let x = 0; x < cssW; x += 10) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, cssH); ctx.stroke(); }
+      for (let y = 0; y < cssH; y += 10) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(cssW, y); ctx.stroke(); }
+
+      ctx.strokeStyle = "rgba(26,86,219,0.22)";
+      ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(0, cssH * 0.35); ctx.lineTo(cssW, cssH * 0.55); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(cssW * 0.35, 0); ctx.lineTo(cssW * 0.55, cssH); ctx.stroke();
+
+      const retailers = [
+        { x: 0.22, y: 0.55, label: "Marquis" },
+        { x: 0.72, y: 0.35, label: "You" },
+      ];
+      for (const r of retailers) {
+        const x = r.x * cssW, y = r.y * cssH;
+        ctx.fillStyle = r.label === "You" ? "#f59e0b" : "#22c55e";
+        ctx.beginPath(); ctx.arc(x, y, 4, 0, Math.PI * 2); ctx.fill();
+        ctx.strokeStyle = "#ffffff";
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+      }
+
+      for (const d of dotsRef.current) {
+        d.t += d.speed * dt;
+        if (d.t >= 1) {
+          d.t = 0;
+          d.path = Array.from({ length: 4 }, () => [0.1 + Math.random() * 0.8, 0.15 + Math.random() * 0.7]);
+        }
+        const p = pointAlong(d.path, d.t, cssW, cssH);
+        const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, 8);
+        grad.addColorStop(0, "rgba(26,86,219,0.45)");
+        grad.addColorStop(1, "rgba(26,86,219,0)");
+        ctx.fillStyle = grad;
+        ctx.beginPath(); ctx.arc(p.x, p.y, 8, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = "#1a56db";
+        ctx.beginPath(); ctx.arc(p.x, p.y, 2, 0, Math.PI * 2); ctx.fill();
+      }
+
+      raf = requestAnimationFrame(draw);
+    };
+    raf = requestAnimationFrame(draw);
+
+    const ro = new ResizeObserver(resize);
+    ro.observe(canvas);
+    return () => { cancelAnimationFrame(raf); ro.disconnect(); };
+  }, []);
+
+  return <canvas ref={canvasRef} className="block w-full" style={{ height: 90, borderRadius: 8 }} />;
+}
+
 export function PhoneMockup({ width = 180 }: { width?: number }) {
   const [idx, setIdx] = useState(0);
 
