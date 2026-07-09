@@ -50,7 +50,7 @@ export function Hero() {
                   fontWeight: 600,
                 }}
               >
-                Built for BC's 2026 licensee-to-licensee change
+                The rules just changed. We built for it.
               </span>
             </div>
 
@@ -67,11 +67,11 @@ export function Hero() {
                 letterSpacing: "-0.02em",
               }}
             >
-              Never{" "}
+              Wholesale beverage.
+              <br />
               <span style={{ color: "#22c55e", fontStyle: "italic" }}>
-                Run Dry
+                Reimagined.
               </span>
-              .
             </h1>
 
             {/* Sub-headline */}
@@ -85,7 +85,7 @@ export function Hero() {
                 lineHeight: 1.3,
               }}
             >
-              Predictive AI inventory ordering for BC licensees.
+              Built for the industry, by the industry.
             </div>
 
             {/* Body copy */}
@@ -99,25 +99,24 @@ export function Hero() {
                 maxWidth: 500,
               }}
             >
-              ReStok helps restaurants, bars, hotels, and clubs spot low
-              inventory, approve replenishment, and get wine, beer, and spirits
-              delivered to the back door the same day they order.
+              Browse live inventory from BC private retailers, approve in one
+              tap, and get it delivered to your back door the same day you order.
             </p>
 
             {/* Value props */}
             <ul className="mt-5 flex flex-col gap-2">
               {[
                 {
-                  title: "Never run dry",
-                  body: "AI par alerts before you're out",
+                  title: "Never Run Dry",
+                  body: "predictive AI inventory ordering",
                 },
                 {
-                  title: "One tap, best price",
+                  title: "One Tap, Best Price",
                   body: "every BC retailer, one order",
                 },
                 {
-                  title: "Same-day delivery",
-                  body: "to your back door, LCRB-compliant",
+                  title: "New Revenue Channel",
+                  body: "for retailers, zero cost to list",
                 },
               ].map((item) => (
                 <li
@@ -170,6 +169,25 @@ export function Hero() {
                 Apply as a Retailer
               </Link>
             </div>
+
+            {/* Regulatory footnote */}
+            <p
+              className="mt-4"
+              style={{
+                color: "rgba(255,255,255,0.5)",
+                fontSize: 11,
+                lineHeight: 1.5,
+                margin: 0,
+              }}
+            >
+              Built on BC's 2026 licensee-to-licensee regulation —{" "}
+              <Link
+                to="/about"
+                style={{ color: "#22c55e", textDecoration: "underline" }}
+              >
+                see how it works
+              </Link>
+            </p>
           </div>
 
           {/* Right column — animated phone */}
