@@ -6,7 +6,6 @@ import { Hero } from "@/components/restok/Hero";
 import { HowItWorks } from "@/components/restok/HowItWorks";
 
 import { MarketTrends } from "@/components/restok/MarketTrends";
-import { LiveActivity } from "@/components/restok/LiveActivity";
 import { CartDrawer } from "@/components/restok/CartDrawer";
 import { ReferralDrawer } from "@/components/restok/ReferralDrawer";
 import { OrderConfirmation } from "@/components/restok/OrderConfirmation";
