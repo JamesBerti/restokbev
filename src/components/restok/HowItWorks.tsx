@@ -6,13 +6,13 @@ const STEPS = [
     icon: LayoutGrid,
     bg: "#1a56db",
     label: "Browse",
-    sub: "Live inventory from BC private retailers",
+    sub: "The catalogue from BC private retailers",
   },
   {
     icon: CheckCheck,
     bg: "#16a34a",
     label: "Approve",
-    sub: "AI finds best price. One tap to confirm",
+    sub: "Best price found. Your retailer confirms in under 30 minutes.",
   },
   {
     icon: Truck,
