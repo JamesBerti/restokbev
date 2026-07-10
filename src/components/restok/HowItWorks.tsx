@@ -6,7 +6,7 @@ const STEPS = [
     icon: LayoutGrid,
     bg: "#1a56db",
     label: "Browse",
-    sub: "The catalogue from BC private retailers",
+    sub: "Live inventory from BC private retailers",
   },
   {
     icon: CheckCheck,
