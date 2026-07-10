@@ -108,11 +108,11 @@ export function Hero() {
               {[
                 {
                   title: "Never Run Dry",
-                  body: "predictive AI inventory ordering",
+                  body: "predictive reorder alerts",
                 },
                 {
                   title: "One Tap, Best Price",
-                  body: "every BC retailer, one order",
+                  body: "compare retailers in a single order",
                 },
                 {
                   title: "New Revenue Channel",
