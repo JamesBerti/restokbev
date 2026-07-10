@@ -99,7 +99,7 @@ export function Hero() {
                 maxWidth: 500,
               }}
             >
-              Browse live inventory from BC private retailers, approve in one
+              Browse the catalogue from BC private retailers, approve in one
               tap, and get it delivered to your back door the same day you order.
             </p>
 
@@ -108,11 +108,11 @@ export function Hero() {
               {[
                 {
                   title: "Never Run Dry",
-                  body: "predictive AI inventory ordering",
+                  body: "predictive reorder alerts",
                 },
                 {
                   title: "One Tap, Best Price",
-                  body: "every BC retailer, one order",
+                  body: "compare retailers in a single order",
                 },
                 {
                   title: "New Revenue Channel",

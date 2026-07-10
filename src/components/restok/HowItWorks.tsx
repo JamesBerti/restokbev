@@ -12,7 +12,7 @@ const STEPS = [
     icon: CheckCheck,
     bg: "#16a34a",
     label: "Approve",
-    sub: "AI finds best price. One tap to confirm",
+    sub: "Best price found. Your retailer confirms in under 30 minutes.",
   },
   {
     icon: Truck,

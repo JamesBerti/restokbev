@@ -27,7 +27,7 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "ReStok — Wholesale Beverage Procurement for BC Licensees" },
-      { name: "description", content: "Order wholesale wine, beer & spirits from Vancouver's top retailers. LDB floor pricing, LCRB-licensed delivery, same-day to your venue." },
+      { name: "description", content: "Order wholesale wine, beer & spirits from Vancouver's top retailers. LDB floor pricing, LCRB-compliant delivery, same-day to your venue." },
     ],
   }),
   component: Marketplace,
@@ -270,7 +270,7 @@ function Marketplace() {
 
         <footer className="mt-10 rounded-xl border border-border bg-surface px-5 py-3.5 shadow-soft">
           <p className="text-[10px] leading-relaxed text-muted-foreground">
-            <strong className="text-foreground">ReStok BC Wholesale Platform</strong> — Licensed retailers only. All transactions comply with LCRB regulations and LDB wholesale floor pricing. Delivery fulfilled by LCRB-licensed carriers. Recipient must present licensee ID on delivery. Platform fee: 3.5%–5%, depending on tier. Questions? support@restokbev.ca · <Link to="/about" className="font-semibold text-muted-foreground underline hover:text-foreground">About</Link> · <Link to="/faq" className="font-semibold text-muted-foreground underline hover:text-foreground">FAQ</Link>
+            <strong className="text-foreground">ReStok BC Wholesale Platform</strong> — Licensed retailers only. All transactions comply with LCRB regulations and LDB wholesale floor pricing. Delivery is fulfilled by the selling retailer or its authorized agent, in accordance with LCRB requirements. Recipient must present licensee ID on delivery. Platform fee: 3.5%–5%, depending on tier. Questions? support@restokbev.ca · <Link to="/about" className="font-semibold text-muted-foreground underline hover:text-foreground">About</Link> · <Link to="/faq" className="font-semibold text-muted-foreground underline hover:text-foreground">FAQ</Link>
           </p>
         </footer>
       </main>

@@ -11,9 +11,10 @@ const LICENSEE_STEPS: Step[] = [
 const RETAILER_STEPS: Step[] = [
   { n: 1, label: "Create Account", desc: "Enter your LCRB retail licence number and store details." },
   { n: 2, label: "Store Verified", desc: "We confirm your retail licence and add your store to the network." },
-  { n: 3, label: "Build Your Catalog", desc: "Add your products with pricing. Takes about 15 minutes." },
-  { n: 4, label: "Receive Orders", desc: "Get instant notifications when a licensee orders from your store." },
-  { n: 5, label: "Get Paid", desc: "ReStok handles payment and transfers your earnings via Stripe." },
+  { n: 3, label: "Review Terms", desc: "Confirm listing terms and payout details." },
+  { n: 4, label: "Add Your Products", desc: "Connect your online store, POS, or send a file." },
+  { n: 5, label: "Receive Orders", desc: "Get instant notifications when a licensee orders from your store." },
+  { n: 6, label: "Get Paid", desc: "ReStok handles payment and transfers your earnings via Stripe." },
 ];
 
 export function SignupProcessFlow({ kind }: { kind: "licensee" | "retailer" }) {
