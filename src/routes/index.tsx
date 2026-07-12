@@ -377,7 +377,7 @@ function Marketplace() {
         <MarketTrends />
       </div>
 
-      <main className="mx-auto max-w-[1200px] px-5 py-5">
+      <main ref={catalogueRef} className="mx-auto max-w-[1200px] px-5 py-5">
 
 
         <div className="-mx-1 mb-3.5 flex gap-2 overflow-x-auto px-1 pb-2">
