@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { Gift } from "lucide-react";
@@ -45,6 +45,7 @@ function Marketplace() {
   const [activeCat, setActiveCat] = useState("All");
   const [activeRetailer, setActiveRetailer] = useState("All Retailers");
   const [search, setSearch] = useState("");
+  const [searchFocused, setSearchFocused] = useState(false);
   const [sortBy, setSortBy] = useState("popular");
   const [cart, setCart] = useState<Cart>({});
   const [cartOpen, setCartOpen] = useState(false);
@@ -52,6 +53,9 @@ function Marketplace() {
   const [confirmedTotal, setConfirmedTotal] = useState<number | null>(null);
   const [retailers, setRetailers] = useState<Retailer[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
+  const catalogueRef = useRef<HTMLElement | null>(null);
+  const searchWrapRef = useRef<HTMLDivElement | null>(null);
+
 
   // Load retailers + products and subscribe to realtime changes
   useEffect(() => {
@@ -157,18 +161,170 @@ function Marketplace() {
     }
   };
 
+  // Close suggestions on outside click
+  useEffect(() => {
+    if (!searchFocused) return;
+    const onDown = (e: MouseEvent) => {
+      if (searchWrapRef.current && !searchWrapRef.current.contains(e.target as Node)) {
+        setSearchFocused(false);
+      }
+    };
+    document.addEventListener("mousedown", onDown);
+    return () => document.removeEventListener("mousedown", onDown);
+  }, [searchFocused]);
+
+  const scrollToCatalogue = () => {
+    setTimeout(() => {
+      catalogueRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 40);
+  };
+
+  const q = search.trim().toLowerCase();
+  const productSuggestions = useMemo(() => {
+    const base = q
+      ? products.filter(
+          (p) =>
+            p.name.toLowerCase().includes(q) ||
+            p.category.toLowerCase().includes(q) ||
+            p.retailer.toLowerCase().includes(q),
+        )
+      : [...products].sort((a, b) => b.reviews - a.reviews);
+    return base.slice(0, 5);
+  }, [products, q]);
+
+  const trendingCategories = CATEGORIES.filter((c) => c.label !== "All").slice(0, 6);
+
+  const applySuggestion = (opts: { category?: string; retailer?: string; query?: string }) => {
+    if (opts.category) setActiveCat(opts.category);
+    if (opts.retailer) setActiveRetailer(opts.retailer);
+    if (opts.query !== undefined) setSearch(opts.query);
+    setSearchFocused(false);
+    scrollToCatalogue();
+  };
+
+
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <header className="bg-nav-navy sticky top-0 z-[100] shadow-soft">
         <div className="mx-auto flex h-16 max-w-[1200px] items-center gap-3.5 px-5">
           <Wordmark />
 
-          <div className="flex flex-1 items-center gap-2 rounded-xl border border-white/15 bg-white/5 px-3.5 py-2 focus-within:border-white/40">
-            <span className="text-base text-white/60">🔍</span>
-            <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search products, categories..."
-              className="w-full border-none bg-transparent text-[13px] text-white outline-none placeholder:text-white/50" />
-            {search && <button onClick={() => setSearch("")} className="text-sm text-white/60">✕</button>}
+          <div ref={searchWrapRef} className="relative flex flex-1">
+            <div className={`flex flex-1 items-center gap-2 rounded-xl border bg-white/5 px-3.5 py-2 transition ${searchFocused ? "border-white/50" : "border-white/15"}`}>
+              <span className="text-base text-white/60">🔍</span>
+              <input
+                value={search}
+                onChange={(e) => { setSearch(e.target.value); setSearchFocused(true); }}
+                onFocus={() => setSearchFocused(true)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    setSearchFocused(false);
+                    scrollToCatalogue();
+                  } else if (e.key === "Escape") {
+                    setSearchFocused(false);
+                  }
+                }}
+                placeholder="Search products, categories..."
+                className="w-full border-none bg-transparent text-[13px] text-white outline-none placeholder:text-white/50"
+              />
+              {search && (
+                <button
+                  onClick={() => setSearch("")}
+                  className="text-sm text-white/60 hover:text-white"
+                  aria-label="Clear search"
+                >
+                  ✕
+                </button>
+              )}
+            </div>
+
+            {searchFocused && (
+              <div className="absolute left-0 right-0 top-[calc(100%+6px)] z-[110] overflow-hidden rounded-xl border border-border bg-surface text-foreground shadow-medium">
+                <div className="max-h-[420px] overflow-y-auto">
+                  <div className="px-4 pb-2 pt-3 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+                    Trending categories
+                  </div>
+                  <div className="flex flex-wrap gap-1.5 px-3 pb-3">
+                    {trendingCategories.map((c) => (
+                      <button
+                        key={c.label}
+                        onMouseDown={(e) => e.preventDefault()}
+                        onClick={() => applySuggestion({ category: c.label, query: "" })}
+                        className="inline-flex items-center gap-1.5 rounded-full border border-border bg-background px-3 py-1 text-xs font-semibold text-foreground transition hover:border-primary hover:bg-primary/10"
+                      >
+                        <span>{c.emoji}</span>
+                        <span>{c.label}</span>
+                      </button>
+                    ))}
+                  </div>
+
+                  {productSuggestions.length > 0 && (
+                    <>
+                      <div className="border-t border-border px-4 pb-2 pt-3 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+                        {q ? "Matching products" : "Popular right now"}
+                      </div>
+                      <ul className="pb-2">
+                        {productSuggestions.map((p) => (
+                          <li key={p.id}>
+                            <button
+                              onMouseDown={(e) => e.preventDefault()}
+                              onClick={() => applySuggestion({ query: p.name })}
+                              className="flex w-full items-center gap-3 px-4 py-2 text-left transition hover:bg-primary/5"
+                            >
+                              <span className="text-lg">
+                                {CATEGORIES.find((c) => c.label === p.category)?.emoji ?? "🍾"}
+                              </span>
+                              <span className="flex-1 min-w-0">
+                                <span className="block truncate text-[13px] font-semibold text-foreground">
+                                  {p.name}
+                                </span>
+                                <span className="block truncate text-[11px] text-muted-foreground">
+                                  {p.category} · {p.retailer}
+                                </span>
+                              </span>
+                              <span className="text-[12px] font-bold text-foreground">
+                                ${p.price.toFixed(2)}
+                              </span>
+                            </button>
+                          </li>
+                        ))}
+                      </ul>
+                    </>
+                  )}
+
+                  {retailers.length > 0 && (
+                    <>
+                      <div className="border-t border-border px-4 pb-2 pt-3 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+                        Browse by retailer
+                      </div>
+                      <div className="flex flex-wrap gap-1.5 px-3 pb-3">
+                        {retailers.slice(0, 6).map((r) => (
+                          <button
+                            key={r.id}
+                            onMouseDown={(e) => e.preventDefault()}
+                            onClick={() => applySuggestion({ retailer: r.name, query: "" })}
+                            className="rounded-full border border-border bg-background px-3 py-1 text-xs font-semibold text-foreground transition hover:border-primary hover:bg-primary/10"
+                          >
+                            {r.name}
+                          </button>
+                        ))}
+                      </div>
+                    </>
+                  )}
+
+                  <button
+                    onMouseDown={(e) => e.preventDefault()}
+                    onClick={() => applySuggestion({ category: "All", retailer: "All Retailers", query: "" })}
+                    className="block w-full border-t border-border bg-background px-4 py-2.5 text-center text-[12px] font-bold text-primary transition hover:bg-primary/5"
+                  >
+                    Browse full catalogue →
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
+
 
           <nav className="hidden items-center gap-3 text-xs font-semibold md:flex">
             <Link to="/about" className="text-white/70 hover:text-white">About</Link>
@@ -221,7 +377,7 @@ function Marketplace() {
         <MarketTrends />
       </div>
 
-      <main className="mx-auto max-w-[1200px] px-5 py-5">
+      <main ref={catalogueRef} className="mx-auto max-w-[1200px] px-5 py-5">
 
 
         <div className="-mx-1 mb-3.5 flex gap-2 overflow-x-auto px-1 pb-2">
