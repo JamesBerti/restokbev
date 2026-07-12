@@ -161,6 +161,49 @@ function Marketplace() {
     }
   };
 
+  // Close suggestions on outside click
+  useEffect(() => {
+    if (!searchFocused) return;
+    const onDown = (e: MouseEvent) => {
+      if (searchWrapRef.current && !searchWrapRef.current.contains(e.target as Node)) {
+        setSearchFocused(false);
+      }
+    };
+    document.addEventListener("mousedown", onDown);
+    return () => document.removeEventListener("mousedown", onDown);
+  }, [searchFocused]);
+
+  const scrollToCatalogue = () => {
+    setTimeout(() => {
+      catalogueRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 40);
+  };
+
+  const q = search.trim().toLowerCase();
+  const productSuggestions = useMemo(() => {
+    const base = q
+      ? products.filter(
+          (p) =>
+            p.name.toLowerCase().includes(q) ||
+            p.category.toLowerCase().includes(q) ||
+            p.retailer.toLowerCase().includes(q),
+        )
+      : [...products].sort((a, b) => b.reviews - a.reviews);
+    return base.slice(0, 5);
+  }, [products, q]);
+
+  const trendingCategories = CATEGORIES.filter((c) => c.label !== "All").slice(0, 6);
+
+  const applySuggestion = (opts: { category?: string; retailer?: string; query?: string }) => {
+    if (opts.category) setActiveCat(opts.category);
+    if (opts.retailer) setActiveRetailer(opts.retailer);
+    if (opts.query !== undefined) setSearch(opts.query);
+    setSearchFocused(false);
+    scrollToCatalogue();
+  };
+
+
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <header className="bg-nav-navy sticky top-0 z-[100] shadow-soft">
