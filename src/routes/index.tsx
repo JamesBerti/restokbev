@@ -45,6 +45,7 @@ function Marketplace() {
   const [activeCat, setActiveCat] = useState("All");
   const [activeRetailer, setActiveRetailer] = useState("All Retailers");
   const [search, setSearch] = useState("");
+  const [searchFocused, setSearchFocused] = useState(false);
   const [sortBy, setSortBy] = useState("popular");
   const [cart, setCart] = useState<Cart>({});
   const [cartOpen, setCartOpen] = useState(false);
@@ -52,6 +53,9 @@ function Marketplace() {
   const [confirmedTotal, setConfirmedTotal] = useState<number | null>(null);
   const [retailers, setRetailers] = useState<Retailer[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
+  const catalogueRef = useRef<HTMLElement | null>(null);
+  const searchWrapRef = useRef<HTMLDivElement | null>(null);
+
 
   // Load retailers + products and subscribe to realtime changes
   useEffect(() => {
